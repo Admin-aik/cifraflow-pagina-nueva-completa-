@@ -9,13 +9,13 @@ import {
   Lock, 
   Mail, 
   ChevronRight,
-  ArrowRight
+  ArrowRight,
+  ExternalLink
 } from 'lucide-react';
 import { PageView } from './Navbar';
 
 interface PlatformModulesSectionProps {
   onNavigate: (view: PageView) => void;
-  onOpenLogin: () => void;
   onOpenDemoPartner: (partnerId: string) => void;
   onOpenContactModal: (planName?: string) => void;
   showBreadcrumb?: boolean;
@@ -23,7 +23,6 @@ interface PlatformModulesSectionProps {
 
 export const PlatformModulesSection: React.FC<PlatformModulesSectionProps> = ({
   onNavigate,
-  onOpenLogin,
   onOpenDemoPartner,
   onOpenContactModal,
   showBreadcrumb = false
@@ -51,7 +50,7 @@ export const PlatformModulesSection: React.FC<PlatformModulesSectionProps> = ({
         {/* 8 Cards Grid with High-Contrast Dark Cosmic Glass */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
           
-          {/* Card 1: Catálogo de Demos en Vivo */}
+          {/* Card 1: Demo Oficial en Vivo */}
           <div 
             onClick={() => onNavigate('demos')}
             className="p-6 rounded-3xl bg-slate-900/95 border border-purple-400/30 hover:border-cyan-400/60 shadow-lg hover:shadow-[0_0_30px_rgba(0,240,255,0.2)] transition-all duration-300 cursor-pointer group flex flex-col justify-between space-y-5 text-white"
@@ -62,41 +61,29 @@ export const PlatformModulesSection: React.FC<PlatformModulesSectionProps> = ({
                   <Sparkles className="w-5 h-5 text-cyan-300" />
                 </div>
                 <span className="text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-purple-950/80 text-cyan-300 border border-purple-400/40">
-                  3 DEMOS ACTIVAS
+                  DEMO EN VIVO
                 </span>
               </div>
               <h3 className="font-display font-extrabold text-lg text-white group-hover:text-cyan-300 transition-colors">
-                Catálogo de Demos en Vivo
+                Demo Oficial en Vivo
               </h3>
               <p className="text-xs text-slate-300 mt-2 leading-relaxed">
-                Accede directamente a Banco Plaza, Banco de Venezuela y MásQueSeguridad.
+                Accede a la plataforma oficial de Cifra Flow Financiero en tiempo real con simulador interactivo.
               </p>
               
               {/* Partner Badges */}
               <div className="flex flex-wrap gap-2 mt-4">
-                <button
-                  onClick={(e) => { e.stopPropagation(); onOpenDemoPartner('banco-plaza'); }}
-                  className="px-2.5 py-1 rounded-lg bg-emerald-950/60 text-emerald-300 text-[11px] font-bold border border-emerald-500/40 hover:bg-emerald-900/60 transition-colors cursor-pointer"
-                >
-                  Banco Plaza
-                </button>
-                <button
-                  onClick={(e) => { e.stopPropagation(); onOpenDemoPartner('bdv'); }}
-                  className="px-2.5 py-1 rounded-lg bg-blue-950/60 text-blue-300 text-[11px] font-bold border border-blue-500/40 hover:bg-blue-900/60 transition-colors cursor-pointer"
-                >
-                  BDV
-                </button>
-                <button
-                  onClick={(e) => { e.stopPropagation(); onOpenDemoPartner('masqueseguridad'); }}
-                  className="px-2.5 py-1 rounded-lg bg-cyan-950/60 text-cyan-300 text-[11px] font-bold border border-cyan-500/40 hover:bg-cyan-900/60 transition-colors cursor-pointer"
-                >
-                  MásQueSeguridad
-                </button>
+                <span className="px-2.5 py-1 rounded-lg bg-cyan-950/60 text-cyan-300 text-[11px] font-bold border border-cyan-500/40">
+                  PWA Producción
+                </span>
+                <span className="px-2.5 py-1 rounded-lg bg-purple-950/60 text-purple-300 text-[11px] font-bold border border-purple-500/40">
+                  Microlearning 3-5 min
+                </span>
               </div>
             </div>
 
             <div className="flex items-center gap-1.5 text-xs font-bold text-cyan-300 group-hover:text-cyan-100 pt-4 border-t border-purple-500/20">
-              <span>Abrir catálogo de demos</span>
+              <span>Abrir demo interactiva en vivo</span>
               <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </div>
           </div>
@@ -129,35 +116,7 @@ export const PlatformModulesSection: React.FC<PlatformModulesSectionProps> = ({
             </div>
           </div>
 
-          {/* Card 3: Simulador Tradea & Flow QR */}
-          <div 
-            onClick={() => onNavigate('tradea')}
-            className="p-6 rounded-3xl bg-slate-900/95 border border-purple-400/30 hover:border-cyan-400/60 shadow-lg hover:shadow-[0_0_30px_rgba(0,240,255,0.2)] transition-all duration-300 cursor-pointer group flex flex-col justify-between space-y-5 text-white"
-          >
-            <div>
-              <div className="flex items-center justify-between mb-4">
-                <div className="p-3 rounded-2xl bg-cyan-950/50 text-cyan-300 border border-cyan-400/40 group-hover:scale-110 transition-transform">
-                  <TrendingUp className="w-5 h-5" />
-                </div>
-                <span className="text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-cyan-950/80 text-cyan-300 border border-cyan-400/40">
-                  BVC & BCV
-                </span>
-              </div>
-              <h3 className="font-display font-extrabold text-lg text-white group-hover:text-cyan-300 transition-colors">
-                Simulador Tradea & Flow QR
-              </h3>
-              <p className="text-xs text-slate-300 mt-2 leading-relaxed">
-                Cotizaciones de la Bolsa de Valores de Caracas y calculadora oficial de Pago Móvil en tiempo real.
-              </p>
-            </div>
-
-            <div className="flex items-center gap-1.5 text-xs font-bold text-cyan-300 group-hover:text-cyan-100 pt-4 border-t border-purple-500/20">
-              <span>Abrir simulador bursátil y QR</span>
-              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </div>
-          </div>
-
-          {/* Card 4: Ruta Académica Completa */}
+          {/* Card 3: Ruta Académica Completa */}
           <div 
             onClick={() => onNavigate('ruta-academica')}
             className="p-6 rounded-3xl bg-slate-900/95 border border-purple-400/30 hover:border-cyan-400/60 shadow-lg hover:shadow-[0_0_30px_rgba(192,132,252,0.2)] transition-all duration-300 cursor-pointer group flex flex-col justify-between space-y-5 text-white"
@@ -241,9 +200,9 @@ export const PlatformModulesSection: React.FC<PlatformModulesSectionProps> = ({
             </div>
           </div>
 
-          {/* Card 7: Portal de Acceso por Roles */}
+          {/* Card 7: Ciberseguridad y Prevención Digital */}
           <div 
-            onClick={onOpenLogin}
+            onClick={() => onNavigate('ruta-academica')}
             className="p-6 rounded-3xl bg-slate-900/95 border border-purple-400/30 hover:border-cyan-400/60 shadow-lg hover:shadow-[0_0_30px_rgba(0,240,255,0.2)] transition-all duration-300 cursor-pointer group flex flex-col justify-between space-y-5 text-white"
           >
             <div>
@@ -252,19 +211,19 @@ export const PlatformModulesSection: React.FC<PlatformModulesSectionProps> = ({
                   <Lock className="w-5 h-5 text-cyan-300" />
                 </div>
                 <span className="text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-purple-950/80 text-cyan-300 border border-purple-400/40">
-                  PORTAL 5 ROLES
+                  CIBERDEFENSA
                 </span>
               </div>
               <h3 className="font-display font-extrabold text-lg text-white group-hover:text-cyan-300 transition-colors">
-                Portal de Acceso por Roles
+                Ciberseguridad y Prevención Digital
               </h3>
               <p className="text-xs text-slate-300 mt-2 leading-relaxed">
-                Inicia sesión como Estudiante, Administrador, Guardián, Colegio o Patrocinante para probar el entorno adaptado.
+                Laboratorio de ciberdefensa juvenil: prevención de phishing, protección de billeteras y seguridad en transacciones móviles.
               </p>
             </div>
 
             <div className="flex items-center gap-1.5 text-xs font-bold text-cyan-300 group-hover:text-cyan-100 pt-4 border-t border-purple-500/20">
-              <span>Abrir ventana de acceso</span>
+              <span>Ver laboratorio de ciberseguridad</span>
               <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </div>
           </div>

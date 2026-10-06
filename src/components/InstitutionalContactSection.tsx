@@ -53,8 +53,8 @@ export const InstitutionalContactSection: React.FC<InstitutionalContactSectionPr
       `Saludos cordiales,\n${formData.fullName}`
     );
 
-    // Trigger user mail client with prefilled details to cifraflow2026@gmail.com
-    window.location.href = `mailto:cifraflow2026@gmail.com?subject=${subject}&body=${body}`;
+    // Trigger user mail client with prefilled details to aik.info@aiksoluciones.com
+    window.location.href = `mailto:aik.info@aiksoluciones.com?subject=${subject}&body=${body}`;
 
     setTimeout(() => {
       setLoading(false);
@@ -119,7 +119,7 @@ export const InstitutionalContactSection: React.FC<InstitutionalContactSectionPr
 
                 {/* Direct email quick action card */}
                 <a
-                  href="mailto:cifraflow2026@gmail.com?subject=Solicitud%20Institucional%20Cifra%20Flow"
+                  href="mailto:aik.info@aiksoluciones.com?subject=Solicitud%20Institucional%20Cifra%20Flow"
                   className="mt-2 flex items-center justify-between p-3.5 rounded-2xl bg-gradient-to-r from-purple-900/60 to-cyan-950/60 hover:from-purple-800/80 hover:to-cyan-900/80 border border-cyan-400/40 text-white transition-all shadow-md group cursor-pointer"
                 >
                   <div className="flex items-center gap-3">
@@ -129,7 +129,7 @@ export const InstitutionalContactSection: React.FC<InstitutionalContactSectionPr
                     <div>
                       <span className="text-[10px] text-cyan-300 font-bold block uppercase tracking-wider">Correo Electrónico Oficial</span>
                       <span className="font-extrabold text-white text-xs sm:text-sm group-hover:text-cyan-200 transition-colors">
-                        cifraflow2026@gmail.com
+                        aik.info@aiksoluciones.com
                       </span>
                     </div>
                   </div>
@@ -242,11 +242,11 @@ export const InstitutionalContactSection: React.FC<InstitutionalContactSectionPr
 
                 <div className="text-center pt-1">
                   <a
-                    href="mailto:cifraflow2026@gmail.com?subject=Consulta%20Directa%20Cifra%20Flow"
+                    href="mailto:aik.info@aiksoluciones.com?subject=Consulta%20Directa%20Cifra%20Flow"
                     className="inline-flex items-center gap-1.5 text-xs text-cyan-300 hover:text-cyan-100 underline underline-offset-4 font-semibold transition-colors"
                   >
                     <Mail className="w-3.5 h-3.5" />
-                    <span>O abre tu correo directamente para: cifraflow2026@gmail.com</span>
+                    <span>O abre tu correo directamente para: aik.info@aiksoluciones.com</span>
                   </a>
                 </div>
 
@@ -260,15 +260,15 @@ export const InstitutionalContactSection: React.FC<InstitutionalContactSectionPr
                   ¡Solicitud Enviada con Éxito!
                 </h4>
                 <p className="text-xs sm:text-sm text-slate-300 max-w-sm mx-auto leading-relaxed">
-                  Tu mensaje ha sido dirigido a <strong className="text-cyan-300 font-bold">cifraflow2026@gmail.com</strong>. Un consultor académico e institucional se comunicará contigo en menos de 24 horas hábiles.
+                  Tu mensaje ha sido dirigido a <strong className="text-cyan-300 font-bold">aik.info@aiksoluciones.com</strong>. Un consultor académico e institucional se comunicará contigo en menos de 24 horas hábiles.
                 </p>
                 <div className="pt-2 flex flex-wrap justify-center gap-3">
                   <a
-                    href="mailto:cifraflow2026@gmail.com?subject=Solicitud%20Institucional%20Cifra%20Flow"
+                    href="mailto:aik.info@aiksoluciones.com?subject=Solicitud%20Institucional%20Cifra%20Flow"
                     className="px-4 py-2 rounded-xl bg-purple-900/80 border border-purple-400/50 text-cyan-200 text-xs font-bold hover:bg-purple-800 transition-colors flex items-center gap-1.5"
                   >
                     <Mail className="w-3.5 h-3.5" />
-                    <span>Abrir en correo: cifraflow2026@gmail.com</span>
+                    <span>Abrir en correo: aik.info@aiksoluciones.com</span>
                   </a>
                   <button
                     onClick={() => {

@@ -127,11 +127,11 @@ export const PILLARS_DATA: PillarData[] = [
     iconName: 'TrendingUp',
     color: '#06B6D4',
     accentColor: '#3B82F6',
-    description: 'Estrategias contra la devaluación, preservación de capital en economía bimonetaria, simulación bursátil real con Tradea Junior (Bolsa de Valores de Caracas y mercados globales) y análisis de riesgo en Blockchain/Bitcoin.',
+    description: 'Estrategias contra la devaluación, preservación de capital en economía bimonetaria, simulación bursátil real (Bolsa de Valores de Caracas y mercados globales) y análisis de riesgo en Blockchain/Bitcoin.',
     highlights: [
       'Preservación del poder adquisitivo en contexto bimonetario',
       'Introducción a la Bolsa de Valores de Caracas (BVC) y acciones globales',
-      'Simulador bursátil Tradea Junior libre de capital real',
+      'Simulador bursátil educativo libre de capital real',
       'Análisis técnico y fundamental sin humo ni esquemas "get-rich-quick"',
       'Fundamentos de Blockchain y Bitcoin con evaluación de volatilidad'
     ],
@@ -187,10 +187,10 @@ export const PILLARS_DATA: PillarData[] = [
         modules: [
           {
             id: 'p2-m4',
-            title: 'Diversificación Global y Simulador Tradea Junior',
+            title: 'Diversificación Global y Simulación Bursátil',
             duration: '5 min',
             xpReward: 180,
-            badge: 'Tradea Master',
+            badge: 'Bolsa Master',
             description: 'Práctica interactiva creando una cartera equilibrada (ETFs, S&P500 simulado, BVC) usando saldo académico virtual.',
             keyConcepts: ['Diversificación', 'Riesgo vs Retorno', 'Plazo de Inversión']
           }
@@ -343,7 +343,7 @@ export const SPONSORSHIP_PLANS: SponsorshipPlan[] = [
     features: [
       'Apadrinamiento integral de 3 Instituciones Educativas (hasta 2,000 alumnos)',
       'Presencia prioritaria B2B en la PWA con Misiones Corporativas patrocinadas',
-      'Simulador "Tradea Junior" personalizado con marca de la empresa',
+      'Módulos de educación financiera personalizados con marca de la empresa',
       'Talleres presenciales/híbridos de cierre de año con entrega de galardones',
       'Reporte de Cumplimiento ESG & RSE directo para auditorías institucionales',
       'Soporte prioritario y capacitación pedagógica a profesores del circuito'
@@ -359,7 +359,7 @@ export const FAQ_ITEMS = [
   },
   {
     q: '¿Cómo garantiza Cifra que los temas financieros sean seguros y sin riesgos?',
-    a: 'Cifra opera bajo un estricto enfoque pedagógico avalado. No manejamos dinero real ni promovemos plataformas de especulación arriesgada. La herramienta Tradea Junior funciona con saldo virtual académico (XP), enseñando gestión de riesgos, presupuesto y finanzas éticas libres de esquemas multinivel o de enriquecimiento rápido.'
+    a: 'Cifra opera bajo un estricto enfoque pedagógico avalado. No manejamos dinero real ni promovemos plataformas de especulación arriesgada. Los entornos prácticos funcionan con saldo virtual académico (XP), enseñando gestión de riesgos, presupuesto y finanzas éticas libres de esquemas multinivel o de enriquecimiento rápido.'
   },
   {
     q: '¿Cómo puede mi colegio sumarse al programa?',

@@ -211,20 +211,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             {/* Primary Action Button: Demos en Vivo */}
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
               <button
-                onClick={() => {
-                  if (onOpenDemosPage) {
-                    onOpenDemosPage();
-                  } else {
-                    onExploreDemo();
-                  }
-                }}
+                onClick={() => onOpenDemosPage ? onOpenDemosPage() : (window.location.hash = '#demos')}
                 className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-500 hover:from-purple-500 hover:via-indigo-500 hover:to-cyan-400 text-white font-extrabold text-base tracking-wide shadow-lg shadow-purple-500/35 hover:shadow-[0_0_30px_rgba(0,240,255,0.45)] transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer group"
-                title="Acceder a las Demos en Vivo (Banco Plaza, BDV, MásQueSeguridad)"
+                title="Acceder a la Demo en Vivo de Cifra Flow Financiero"
               >
                 <Sparkles className="w-5 h-5 text-cyan-200 group-hover:scale-110 transition-transform" />
                 <span>Demos en Vivo</span>
                 <ArrowRight className="w-5 h-5 text-cyan-200 group-hover:translate-x-1.5 transition-transform" />
               </button>
+
+              {onOpenDemosPage && (
+                <button
+                  onClick={() => onOpenDemosPage()}
+                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-4 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-200 hover:text-white border border-purple-400/40 text-sm font-bold transition-all shadow-md cursor-pointer"
+                  title="Ver detalles de la demo"
+                >
+                  <Layers className="w-4 h-4 text-purple-300" />
+                  <span>Ver Ficha Técnica</span>
+                </button>
+              )}
             </div>
 
             {/* Official Drive Links & Infographic Button */}
@@ -254,12 +259,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <span>•</span>
 
               <a
-                href="mailto:cifraflow2026@gmail.com?subject=Contacto%20Institucional%20Cifra%20Flow"
+                href="mailto:aik.info@aiksoluciones.com?subject=Contacto%20Institucional%20Cifra%20Flow"
                 className="inline-flex items-center gap-1 text-cyan-300 hover:text-cyan-100 underline underline-offset-4 font-semibold"
-                title="Enviar correo a cifraflow2026@gmail.com"
+                title="Enviar correo a aik.info@aiksoluciones.com"
               >
                 <Mail className="w-3 h-3 text-cyan-400" />
-                <span>cifraflow2026@gmail.com</span>
+                <span>aik.info@aiksoluciones.com</span>
               </a>
 
               {onReplayIntro && (

@@ -55,8 +55,8 @@ export const Footer: React.FC<FooterProps> = ({ initialPlanName, onOpenDemosPage
       `Saludos cordiales,\n${formData.fullName}`
     );
 
-    // Open mail client directly to cifraflow2026@gmail.com
-    window.location.href = `mailto:cifraflow2026@gmail.com?subject=${subject}&body=${body}`;
+    // Open mail client directly to aik.info@aiksoluciones.com
+    window.location.href = `mailto:aik.info@aiksoluciones.com?subject=${subject}&body=${body}`;
 
     setTimeout(() => {
       setLoading(false);
@@ -113,7 +113,7 @@ export const Footer: React.FC<FooterProps> = ({ initialPlanName, onOpenDemosPage
 
               {/* Direct email card */}
               <a
-                href="mailto:cifraflow2026@gmail.com?subject=Contacto%20Institucional%20Cifra%20Flow"
+                href="mailto:aik.info@aiksoluciones.com?subject=Contacto%20Institucional%20Cifra%20Flow"
                 className="mt-2 flex items-center justify-between p-3.5 rounded-2xl bg-gradient-to-r from-purple-900/60 to-cyan-950/60 hover:from-purple-800/80 hover:to-cyan-900/80 border border-cyan-400/40 text-white transition-all shadow-md group cursor-pointer"
               >
                 <div className="flex items-center gap-3">
@@ -123,7 +123,7 @@ export const Footer: React.FC<FooterProps> = ({ initialPlanName, onOpenDemosPage
                   <div>
                     <span className="text-[10px] text-cyan-300 font-bold block uppercase tracking-wider">Correo Electrónico Oficial</span>
                     <span className="font-extrabold text-white text-xs sm:text-sm group-hover:text-cyan-200 transition-colors">
-                      cifraflow2026@gmail.com
+                      aik.info@aiksoluciones.com
                     </span>
                   </div>
                 </div>
@@ -232,11 +232,11 @@ export const Footer: React.FC<FooterProps> = ({ initialPlanName, onOpenDemosPage
 
                 <div className="text-center pt-1">
                   <a
-                    href="mailto:cifraflow2026@gmail.com?subject=Consulta%20Institucional%20Cifra%20Flow"
+                    href="mailto:aik.info@aiksoluciones.com?subject=Consulta%20Institucional%20Cifra%20Flow"
                     className="inline-flex items-center gap-1.5 text-xs text-cyan-300 hover:text-cyan-100 underline underline-offset-4 font-semibold transition-colors"
                   >
                     <Mail className="w-3.5 h-3.5" />
-                    <span>O escribe directo a: cifraflow2026@gmail.com</span>
+                    <span>O escribe directo a: aik.info@aiksoluciones.com</span>
                   </a>
                 </div>
               </form>
@@ -249,15 +249,15 @@ export const Footer: React.FC<FooterProps> = ({ initialPlanName, onOpenDemosPage
                   ¡Solicitud Enviada Exitosamente!
                 </h4>
                 <p className="text-xs sm:text-sm text-slate-200 max-w-sm mx-auto leading-relaxed">
-                  Tu requerimiento ha sido preparado para <strong className="text-cyan-300">cifraflow2026@gmail.com</strong>. Gracias, <strong className="text-white">{formData.fullName}</strong>. Un especialista en alianzas educativas de Cifra Flow se comunicará con <strong className="text-white">{formData.institution}</strong> a través de {formData.email}.
+                  Tu requerimiento ha sido preparado para <strong className="text-cyan-300">aik.info@aiksoluciones.com</strong>. Gracias, <strong className="text-white">{formData.fullName}</strong>. Un especialista en alianzas educativas de Cifra Flow se comunicará con <strong className="text-white">{formData.institution}</strong> a través de {formData.email}.
                 </p>
                 <div className="pt-2 flex flex-wrap justify-center gap-3">
                   <a
-                    href="mailto:cifraflow2026@gmail.com?subject=Solicitud%20Institucional%20Cifra%20Flow"
+                    href="mailto:aik.info@aiksoluciones.com?subject=Solicitud%20Institucional%20Cifra%20Flow"
                     className="px-4 py-2 rounded-xl bg-purple-900/80 border border-purple-400/50 text-cyan-200 text-xs font-bold hover:bg-purple-800 transition-colors flex items-center gap-1.5"
                   >
                     <Mail className="w-3.5 h-3.5" />
-                    <span>Abrir en cifraflow2026@gmail.com</span>
+                    <span>Abrir en aik.info@aiksoluciones.com</span>
                   </a>
                   <button
                     onClick={() => setSubmitted(false)}
@@ -296,15 +296,19 @@ export const Footer: React.FC<FooterProps> = ({ initialPlanName, onOpenDemosPage
 
         {/* Return to Top / Cover Button and Demos Quick Link */}
         <div className="pt-4 flex flex-wrap items-center justify-center gap-4 text-center">
-          {onOpenDemosPage && (
-            <button
-              onClick={onOpenDemosPage}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-cyan-300 hover:text-white border border-purple-400/40 text-xs font-bold transition-all shadow-md cursor-pointer group"
-            >
-              <Sparkles className="w-4 h-4 text-cyan-400 group-hover:scale-110 transition-transform" />
-              <span>Ver Catálogo de Demos en Vivo (3)</span>
-            </button>
-          )}
+          <button
+            onClick={() => {
+              if (onOpenDemosPage) {
+                onOpenDemosPage();
+              } else {
+                window.location.hash = '#demos';
+              }
+            }}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-cyan-300 hover:text-white border border-purple-400/40 text-xs font-bold transition-all shadow-md cursor-pointer group"
+          >
+            <Sparkles className="w-4 h-4 text-cyan-400 group-hover:scale-110 transition-transform" />
+            <span>Ver Demo Oficial en Vivo</span>
+          </button>
 
           <button
             onClick={() => {

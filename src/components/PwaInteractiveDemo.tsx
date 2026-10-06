@@ -10,14 +10,17 @@ import {
   Award, 
   Smartphone, 
   Share2, 
-  ArrowUp 
+  ArrowUp,
+  ArrowLeft 
 } from 'lucide-react';
+import cifraLogo from '../assets/images/cifra_flow_logo_1787321881768.jpg';
 
 interface PwaInteractiveDemoProps {
   onOpenShare?: () => void;
+  onBackToHome?: () => void;
 }
 
-export const PwaInteractiveDemo: React.FC<PwaInteractiveDemoProps> = ({ onOpenShare }) => {
+export const PwaInteractiveDemo: React.FC<PwaInteractiveDemoProps> = ({ onOpenShare, onBackToHome }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [userScore, setUserScore] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, number>>({});
@@ -243,19 +246,28 @@ export const PwaInteractiveDemo: React.FC<PwaInteractiveDemoProps> = ({ onOpenSh
 
         </div>
 
-        {/* Return to Top Button */}
+        {/* Return to Portada Button */}
         <div className="mt-12 text-center">
-          <a
-            href="#inicio"
-            onClick={(e) => {
-              e.preventDefault();
-              window.scrollTo({ top: 0, behavior: 'smooth' });
+          <button
+            onClick={() => {
+              if (onBackToHome) {
+                onBackToHome();
+              } else {
+                window.location.hash = '#inicio';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
             }}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 hover:text-white border border-purple-400/30 hover:border-cyan-400/50 text-xs font-bold transition-all shadow-md cursor-pointer group"
+            className="inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-slate-900 via-purple-950 to-slate-900 hover:from-purple-900 hover:to-indigo-900 text-white border-2 border-cyan-400/60 hover:border-cyan-300 text-sm font-extrabold transition-all shadow-xl shadow-purple-950/40 hover:shadow-[0_0_25px_rgba(0,240,255,0.4)] cursor-pointer group"
+            title="Regresar a la Portada de Cifra Flow"
           >
-            <ArrowUp className="w-4 h-4 text-cyan-400 group-hover:-translate-y-0.5 transition-transform" />
-            <span>Regresar a la Portada</span>
-          </a>
+            <img 
+              src={cifraLogo} 
+              alt="Portada Cifra Flow" 
+              className="w-6 h-6 rounded-lg object-contain bg-slate-950 p-0.5 border border-purple-400/40 group-hover:scale-105 transition-transform" 
+            />
+            <ArrowLeft className="w-5 h-5 text-cyan-400 group-hover:-translate-x-1.5 transition-transform" />
+            <span>Regresar a la Portada de Cifra Flow</span>
+          </button>
         </div>
 
       </div>

@@ -3,7 +3,6 @@ import { Navbar, PageView } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { WhyCifraFlow } from './components/WhyCifraFlow';
 import { AcademicRoute } from './components/AcademicRoute';
-import { TradeaAndFlowQR } from './components/TradeaAndFlowQR';
 import { PwaInteractiveDemo } from './components/PwaInteractiveDemo';
 import { SponsorshipB2B } from './components/SponsorshipB2B';
 import { Footer } from './components/Footer';
@@ -65,8 +64,6 @@ export default function App() {
         setCurrentView('ruta-academica');
       } else if (hash === '#alianzas' || hash === '#apadrinar') {
         setCurrentView('alianzas');
-      } else if (hash === '#tradea' || hash === '#flowqr') {
-        setCurrentView('tradea');
       } else if (hash === '#simulador-pwa' || hash === '#demo-interactiva') {
         setCurrentView('simulador-pwa');
       } else if (hash === '#contacto') {
@@ -91,7 +88,6 @@ export default function App() {
       'ventajas': '#ventajas',
       'ruta-academica': '#ruta-academica',
       'alianzas': '#alianzas',
-      'tradea': '#tradea',
       'demos': '#demos',
       'simulador-pwa': '#simulador-pwa',
       'simulatedStudent': '#simulador-estudiante',
@@ -174,7 +170,6 @@ export default function App() {
       <Navbar 
         activeView={currentView}
         onNavigate={handleNavigate}
-        onOpenLogin={() => setLoginModalOpen(true)}
         onOpenShare={() => setShareModalOpen(true)}
       />
 
@@ -193,37 +188,37 @@ export default function App() {
               onReplayIntro={() => setShowIntro(true)}
             />
 
-            {/* Créditos institucionales discretos al pie de la portada */}
-            <div className="py-4 bg-[#050c26]/80 border-t border-purple-500/20 backdrop-blur-md">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-300">
+            {/* Cintillo Inferior: exactamente del mismo tamaño y estilo que el cintillo superior (h-20 sm:h-22) */}
+            <div className="min-h-20 sm:h-22 bg-[#060c28]/85 border-t border-purple-500/25 backdrop-blur-xl shadow-lg shadow-purple-950/20 flex items-center">
+              <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 h-full py-3 sm:py-0 flex flex-col md:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-slate-300">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="font-bold text-white">CifraFlow financiero:</span>
+                  <span className="font-bold text-white text-sm">CifraFlow financiero:</span>
                   <span className="text-slate-300">marca registrada por AIK SOLUCIONES ESTRATEGICAS, C.A. RIF es J-50807601-0.</span>
                 </div>
 
-                <div className="flex items-center gap-3">
+                <div className="flex flex-wrap items-center gap-3">
                   <a
-                    href="mailto:cifraflow2026@gmail.com?subject=Contacto%20Institucional%20Cifra%20Flow"
-                    className="text-cyan-300 hover:text-cyan-100 underline cursor-pointer font-bold flex items-center gap-1 transition-colors"
-                    title="Enviar correo a cifraflow2026@gmail.com"
+                    href="mailto:aik.info@aiksoluciones.com?subject=Contacto%20Institucional%20Cifra%20Flow"
+                    className="text-cyan-300 hover:text-cyan-100 underline cursor-pointer font-bold flex items-center gap-1.5 transition-colors"
+                    title="Enviar correo a aik.info@aiksoluciones.com"
                   >
-                    <Mail className="w-3.5 h-3.5 text-cyan-400" />
-                    <span>cifraflow2026@gmail.com</span>
+                    <Mail className="w-4 h-4 text-cyan-400" />
+                    <span>aik.info@aiksoluciones.com</span>
                   </a>
-                  <span className="text-slate-500">•</span>
+                  <span className="text-slate-500 hidden sm:inline">•</span>
                   <button
                     onClick={() => handleOpenContactModal()}
                     className="text-purple-300 hover:text-purple-100 underline cursor-pointer font-semibold flex items-center gap-1 transition-colors"
                   >
                     <span>Formulario Institucional</span>
                   </button>
-                  <span className="text-slate-500">•</span>
+                  <span className="text-slate-500 hidden sm:inline">•</span>
                   <button
                     onClick={() => handleNavigate('demos')}
-                    className="text-cyan-300 hover:text-cyan-100 underline cursor-pointer font-semibold flex items-center gap-1 transition-colors"
+                    className="text-cyan-300 hover:text-cyan-100 underline cursor-pointer font-bold flex items-center gap-1.5 transition-colors"
                   >
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span>Ver 3 Demos en Vivo</span>
+                    <Sparkles className="w-4 h-4 text-cyan-300" />
+                    <span>Demos en Vivo</span>
                   </button>
                 </div>
               </div>
@@ -241,7 +236,6 @@ export default function App() {
             <main>
               <PlatformModulesSection 
                 onNavigate={handleNavigate}
-                onOpenLogin={() => setLoginModalOpen(true)}
                 onOpenDemoPartner={handleOpenDemoPartner}
                 onOpenContactModal={handleOpenContactModal}
                 showBreadcrumb
@@ -309,31 +303,12 @@ export default function App() {
           </div>
         )}
 
-        {/* VIEW 5: SIMULADOR TRADEA JUNIOR & FLOW QR */}
-        {currentView === 'tradea' && (
-          <div>
-            <SubpageBreadcrumb 
-              title="Simulador Tradea Junior & Flow QR" 
-              subtitle="Bolsa de Valores de Caracas & Calculadora Oficial BCV" 
-            />
-            <main>
-              <TradeaAndFlowQR />
-              <Footer 
-                initialPlanName={selectedPlanForContact} 
-                onOpenDemosPage={() => handleNavigate('demos')}
-                onBackToHome={() => handleNavigate('portada')}
-              />
-            </main>
-          </div>
-        )}
-
         {/* VIEW 6: CATÁLOGO DEDICADO DE DEMOS EN VIVO */}
         {currentView === 'demos' && (
           <div>
             <DemosPage 
               initialDemoId={selectedDemoId}
               onBackToHome={() => handleNavigate('portada')}
-              onOpenLogin={() => setLoginModalOpen(true)}
             />
           </div>
         )}
@@ -346,7 +321,10 @@ export default function App() {
               subtitle="Simulador Práctico de Microlearning y AIR Score" 
             />
             <main>
-              <PwaInteractiveDemo onOpenShare={() => setShareModalOpen(true)} />
+              <PwaInteractiveDemo 
+                onOpenShare={() => setShareModalOpen(true)} 
+                onBackToHome={() => handleNavigate('portada')}
+              />
               <Footer 
                 initialPlanName={selectedPlanForContact} 
                 onOpenDemosPage={() => handleNavigate('demos')}
@@ -368,22 +346,22 @@ export default function App() {
                 initialPlanName={selectedPlanForContact}
                 onOpenDemos={() => handleNavigate('demos')}
               />
-              <div className="py-8 bg-slate-900/90 border-t border-purple-500/20 backdrop-blur-md">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-300">
+              <div className="min-h-20 sm:h-22 bg-[#060c28]/85 border-t border-purple-500/25 backdrop-blur-xl shadow-lg shadow-purple-950/20 flex items-center">
+                <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 h-full py-3 sm:py-0 flex flex-col md:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-slate-300">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="font-bold text-white">CifraFlow financiero:</span>
+                    <span className="font-bold text-white text-sm">CifraFlow financiero:</span>
                     <span className="text-slate-300">marca registrada por AIK SOLUCIONES ESTRATEGICAS, C.A. RIF es J-50807601-0.</span>
                   </div>
 
-                  <div className="flex items-center gap-4">
+                  <div className="flex flex-wrap items-center gap-3">
                     <button
                       onClick={() => handleNavigate('demos')}
-                      className="text-cyan-300 hover:text-cyan-100 underline cursor-pointer font-semibold flex items-center gap-1 transition-colors"
+                      className="text-cyan-300 hover:text-cyan-100 underline cursor-pointer font-bold flex items-center gap-1.5 transition-colors"
                     >
-                      <Sparkles className="w-3.5 h-3.5" />
-                      <span>Ver Catálogo de Demos</span>
+                      <Sparkles className="w-3.5 h-3.5 text-cyan-300" />
+                      <span>Demo en Vivo</span>
                     </button>
-                    <span className="text-slate-500">•</span>
+                    <span className="text-slate-500 hidden sm:inline">•</span>
                     <button
                       onClick={() => handleNavigate('portada')}
                       className="text-purple-300 hover:text-purple-100 underline cursor-pointer font-semibold flex items-center gap-1 transition-colors"
@@ -420,14 +398,6 @@ export default function App() {
               </div>
 
               <div className="flex items-center gap-3">
-                <button
-                  onClick={() => setLoginModalOpen(true)}
-                  className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-purple-900/60 hover:bg-purple-800/80 text-purple-200 hover:text-white text-xs font-bold transition-all border border-purple-400/40 cursor-pointer"
-                >
-                  <Users className="w-3.5 h-3.5" />
-                  <span>Cambiar Credenciales</span>
-                </button>
-
                 <button
                   onClick={() => handleNavigate('portada')}
                   className="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white transition-colors cursor-pointer border border-slate-700"
@@ -522,7 +492,7 @@ export default function App() {
                     <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
                       <div className="h-full bg-cyan-400 w-[75%]" />
                     </div>
-                    <p className="text-xs text-slate-300">Cartera Tradea Junior: +12.4% retorno simulado en Bolsa.</p>
+                    <p className="text-xs text-slate-300">Cartera de Inversión Estudiantil: +12.4% retorno simulado en Bolsa.</p>
                   </div>
 
                   <div className="p-5 bg-slate-950/80 rounded-2xl border border-purple-500/30 space-y-3">
@@ -615,7 +585,7 @@ export default function App() {
                     Estado de Auditoría y Resguardo de Identidad Estudiantil
                   </h4>
                   <p className="text-xs text-slate-300 leading-relaxed">
-                    Las credenciales estudiantiles no almacenan datos bancarios reales ni números de tarjeta. Todas las operaciones en Tradea Junior y Flow QR se ejecutan en entorno sandbox aislado conforme a la Ley Orgánica para la Protección de Niños, Niñas y Adolescentes (LOPNNA).
+                    Las credenciales estudiantiles no almacenan datos bancarios reales ni números de tarjeta. Todas las operaciones pedagógicas se ejecutan en entorno sandbox aislado conforme a la Ley Orgánica para la Protección de Niños, Niñas y Adolescentes (LOPNNA).
                   </p>
                 </div>
               </div>
@@ -701,7 +671,7 @@ export default function App() {
                   <div className="p-5 bg-slate-950/80 rounded-2xl border border-purple-500/30 space-y-2">
                     <div className="text-xs font-bold text-amber-300">4.to y 5.to Año (120 Alumnos)</div>
                     <div className="text-base font-bold text-white">Bolsa BVC & Emprendimiento</div>
-                    <p className="text-xs text-slate-300">Simulador Tradea Junior activo con carteras de inversión estudiantiles.</p>
+                    <p className="text-xs text-slate-300">Simulador de finanzas e inversión activo con carteras estudiantiles.</p>
                   </div>
                 </div>
 

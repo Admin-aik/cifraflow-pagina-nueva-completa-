@@ -43,7 +43,7 @@ export const ROLES_CONFIG: RoleConfig[] = [
     accentGradient: 'from-cyan-500 via-blue-600 to-indigo-600',
     glowColor: 'rgba(0, 240, 255, 0.4)',
     tagline: 'Aprende ciberseguridad, finanzas bimonetarias y gana XP diaria.',
-    benefits: ['AIR Score gamificado', 'Tradea Junior BVC simulado', 'Misiones de 3 a 5 min']
+    benefits: ['AIR Score gamificado', 'Simulación de Inversión BVC', 'Misiones de 3 a 5 min']
   },
   {
     id: 'Administrador',

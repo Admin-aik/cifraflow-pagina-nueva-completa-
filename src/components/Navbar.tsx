@@ -30,7 +30,6 @@ export type PageView =
   | 'ventajas'
   | 'ruta-academica'
   | 'alianzas'
-  | 'tradea'
   | 'demos'
   | 'simulador-pwa'
   | 'simulatedStudent'
@@ -39,14 +38,12 @@ export type PageView =
 interface NavbarProps {
   activeView: PageView;
   onNavigate: (view: PageView) => void;
-  onOpenLogin: () => void;
   onOpenShare?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ 
   activeView, 
   onNavigate, 
-  onOpenLogin,
   onOpenShare
 }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -107,7 +104,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </button>
 
-        {/* Right Section: 1. Share button, 2. Login button, 3. Dropdown Menu Toggle */}
+        {/* Right Section: 1. Share button, 2. Dropdown Menu Toggle */}
         <div className="relative flex items-center gap-2 sm:gap-3" ref={dropdownRef}>
           
           {/* SHARE BUTTON (Compartir) */}
@@ -120,17 +117,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span className="hidden sm:inline">Compartir</span>
           </button>
 
-          {/* LOGIN BUTTON (Replaced "Acceso PWA" with "Login") */}
-          <button
-            onClick={onOpenLogin}
-            className="flex items-center gap-2 px-3.5 sm:px-5 py-2.5 text-xs sm:text-sm font-bold text-white bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-600 hover:from-purple-500 hover:to-cyan-500 rounded-xl shadow-md shadow-purple-500/25 hover:shadow-cyan-500/35 transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
-            title="Iniciar Sesión en Cifra Flow"
-          >
-            <Lock className="w-4 h-4 text-cyan-200" />
-            <span>Login</span>
-          </button>
-
-          {/* DROPDOWN MENU TOGGLE BAR (Placed to the RIGHT of Login) */}
+          {/* DROPDOWN MENU TOGGLE BAR */}
           <button
             onClick={() => setDropdownOpen(!dropdownOpen)}
             className={`flex items-center gap-2 px-3.5 sm:px-4 py-2.5 text-xs sm:text-sm font-bold rounded-xl border transition-all cursor-pointer shadow-xs ${
@@ -195,26 +182,23 @@ export const Navbar: React.FC<NavbarProps> = ({
               {/* 2. DEMOS EN VIVO DESTACADAS (Acceso Directo Principal) */}
               <button
                 onClick={() => handleNavClick('demos')}
-                className={`w-full text-left p-2.5 rounded-xl transition-all flex items-start gap-3 cursor-pointer group ${
-                  activeView === 'demos'
-                    ? 'bg-purple-900/70 text-white font-bold border border-cyan-400/60 shadow-md shadow-cyan-950/40'
-                    : 'bg-gradient-to-r from-emerald-950/60 via-slate-900/80 to-purple-950/60 hover:from-emerald-900/70 hover:to-purple-900/70 border border-emerald-500/40 hover:border-cyan-400'
-                }`}
+                className="w-full text-left p-2.5 rounded-xl transition-all flex items-start gap-3 cursor-pointer group bg-gradient-to-r from-emerald-950/60 via-slate-900/80 to-purple-950/60 hover:from-emerald-900/70 hover:to-purple-900/70 border border-emerald-500/40 hover:border-cyan-400"
               >
                 <div className="p-2 rounded-lg bg-gradient-to-br from-emerald-500 to-cyan-600 text-slate-950 shadow-xs shrink-0 group-hover:scale-105 transition-transform">
                   <Sparkles className="w-4 h-4 fill-slate-950" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-black text-white group-hover:text-cyan-300">
+                    <span className="text-xs font-black text-white group-hover:text-cyan-300 flex items-center gap-1.5">
                       Demos en Vivo
+                      <ExternalLink className="w-3 h-3 text-cyan-300" />
                     </span>
                     <span className="text-[9px] font-black px-1.5 py-0.2 rounded-full bg-emerald-400 text-slate-950 uppercase shadow-xs">
-                      3 Demos Activas
+                      En Vivo
                     </span>
                   </div>
                   <p className="text-[11px] text-slate-300 mt-0.5 leading-snug">
-                    Banco Plaza, BDV y MásQueSeguridad en vivo.
+                    Abrir demo oficial interactiva en producción.
                   </p>
                 </div>
               </button>
@@ -243,31 +227,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <ArrowRight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
               </button>
 
-              {/* 4. CONTEXTO BIMONETARIO & BOLSA BVC */}
-              <button
-                onClick={() => handleNavClick('tradea')}
-                className={`w-full text-left p-2 rounded-xl transition-all flex items-center gap-3 cursor-pointer ${
-                  activeView === 'tradea'
-                    ? 'bg-cyan-950/60 text-white font-bold border border-cyan-400/50'
-                    : 'hover:bg-slate-800/70 text-slate-200 hover:text-white'
-                }`}
-              >
-                <div className="p-1.5 rounded-lg bg-cyan-950 text-cyan-300 border border-cyan-500/30 shrink-0">
-                  <TrendingUp className="w-4 h-4" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-xs font-bold truncate">Contexto Bimonetario & BVC</span>
-                    <span className="text-[9px] font-bold px-1.5 py-0.2 rounded-full bg-cyan-950 text-cyan-300 border border-cyan-400/30 shrink-0">
-                      Bolsa & BCV
-                    </span>
-                  </div>
-                  <span className="text-[10px] text-slate-400 block truncate">Tradea Junior y simulador Flow QR</span>
-                </div>
-                <ArrowRight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-              </button>
-
-              {/* 5. MICROLEARNING 3-5M & METODOLOGÍA LXD */}
+              {/* 4. MICROLEARNING 3-5M & METODOLOGÍA LXD */}
               <button
                 onClick={() => handleNavClick('ventajas')}
                 className={`w-full text-left p-2 rounded-xl transition-all flex items-center gap-3 cursor-pointer ${

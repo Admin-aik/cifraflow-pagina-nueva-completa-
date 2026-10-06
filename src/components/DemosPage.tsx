@@ -52,95 +52,41 @@ export interface DemoItem {
 
 const DEMOS_LIST: DemoItem[] = [
   {
-    id: 'banco-plaza',
-    title: 'Cifra Flow • Banco Plaza',
-    partner: 'Banco Plaza',
+    id: 'cifraflow-prod',
+    title: 'Cifra Flow Financiero • Demo Oficial en Vivo',
+    partner: 'Cifra Flow Financiero',
     category: 'banca',
-    categoryLabel: 'Banca Privada',
-    tagline: 'Inclusión financiera juvenil, metas de ahorro y finanzas bimonetarias.',
-    description: 'Entorno interactivo gamificado personalizado para jóvenes y clientes de Banco Plaza. Desarrolla hábitos de ahorro con metas reales, microinversión y presupuesto bimonetario.',
-    url: 'https://cifraflow-banco-plaza-dev.web.app/',
-    accentColor: '#10B981',
-    glowColor: 'rgba(16, 185, 129, 0.25)',
-    badgeBg: 'bg-emerald-500/15',
-    badgeBorder: 'border-emerald-500/35',
-    badgeText: 'text-emerald-300',
-    icon: <Landmark className="w-6 h-6 text-emerald-400" />,
-    features: [
-      'Retos prácticos de Ahorro con Metas y Presupuesto',
-      'Simulador de tarjetas de débito y crédito joven',
-      'Microlearning de 3 a 5 min con AIR Score',
-      'Identidad visual corporativa Banco Plaza'
-    ],
-    stats: {
-      modules: '5 Módulos Activos',
-      xp: '1,200 XP Máx',
-      target: 'Jóvenes y Familias'
-    }
-  },
-  {
-    id: 'bdv',
-    title: 'Cifra Flow • Banco de Venezuela (BDV)',
-    partner: 'Banco de Venezuela',
-    category: 'banca',
-    categoryLabel: 'Banca Nacional',
-    tagline: 'Educación financiera a escala masiva, Pago Móvil BDV y cultura del ahorro.',
-    description: 'Solución enfocada en inclusión financiera a gran escala con la identidad del BDV. Enseña a operar responsablemente en Pago Móvil, reconocer tasas oficiales y protegerse de estafas.',
-    url: 'https://cifraflow-bdv-dev.web.app/',
-    accentColor: '#3B82F6',
-    glowColor: 'rgba(59, 130, 246, 0.25)',
-    badgeBg: 'bg-blue-500/15',
-    badgeBorder: 'border-blue-500/35',
-    badgeText: 'text-blue-300',
-    icon: <CreditCard className="w-6 h-6 text-blue-400" />,
-    features: [
-      'Simulación paso a paso de Pago Móvil BDV seguro',
-      'Educación sobre tasas oficiales del BCV y BioPago',
-      'Detección de fraudes telefónicos y suplantación bancaria',
-      'Incentivos de XP y misiones diarias gamificadas'
-    ],
-    stats: {
-      modules: '6 Módulos Activos',
-      xp: '1,500 XP Máx',
-      target: 'Inclusión Masiva'
-    }
-  },
-  {
-    id: 'masqueseguridad',
-    title: 'Cifra Flow • MásQueSeguridad',
-    partner: 'MásQueSeguridad',
-    category: 'ciberseguridad',
-    categoryLabel: 'Ciberseguridad',
-    tagline: 'Ciberdefensa, detección de phishing, higiene digital y protección de datos.',
-    description: 'Entorno formativo especializado en ciberdefensa desarrollado en conjunto con MásQueSeguridad. Prepara a los estudiantes para detectar ataques, asegurar contraseñas y resguardar su patrimonio digital.',
-    url: 'https://cifraflow-masqueseguridad-dev.web.app/',
-    accentColor: '#06B6D4',
-    glowColor: 'rgba(6, 182, 212, 0.25)',
+    categoryLabel: 'Entorno Oficial PWA',
+    tagline: 'Inclusión financiera juvenil, Microlearning Espiral y Ciberseguridad Integral.',
+    description: 'Entorno interactivo gamificado en tiempo real disponible para estudiantes, docentes y familias. Explora la simulación interactiva con dinámicas de microlearning (3 a 5 min), retos prácticos de ahorro y laboratorio de ciberdefensa.',
+    url: 'https://cifraflow-demo-01-prod.web.app/',
+    accentColor: '#00f0ff',
+    glowColor: 'rgba(0, 240, 255, 0.3)',
     badgeBg: 'bg-cyan-500/15',
     badgeBorder: 'border-cyan-500/35',
     badgeText: 'text-cyan-300',
-    icon: <ShieldCheck className="w-6 h-6 text-cyan-400" />,
+    icon: <Sparkles className="w-6 h-6 text-cyan-400" />,
     features: [
-      'Laboratorio de Phishing, Smishing y Enlaces Maliciosos',
-      'Arquitectura de contraseñas inviolables y 2FA',
-      'Protocolos ante hackeo de WhatsApp y Redes Sociales',
-      'Certificación Gamer en Ciberdefensa Práctica'
+      'Entorno PWA interactivo en vivo y tiempo real',
+      'Metodología Microlearning Espiral (3 a 5 min)',
+      'Laboratorio de Ciberdefensa y prevención de fraudes',
+      'Gamificación integral con recompensas y AIR Score'
     ],
     stats: {
-      modules: '5 Módulos Activos',
-      xp: '1,400 XP Máx',
-      target: 'Seguridad Digital'
+      modules: 'Módulos Activos',
+      xp: 'Gamificación Total',
+      target: 'Jóvenes y Bachillerato'
     }
   }
 ];
 
 interface DemosPageProps {
   onBackToHome: () => void;
-  onOpenLogin: () => void;
+  onOpenLogin?: () => void;
   initialDemoId?: string;
 }
 
-export const DemosPage: React.FC<DemosPageProps> = ({ onBackToHome, onOpenLogin, initialDemoId }) => {
+export const DemosPage: React.FC<DemosPageProps> = ({ onBackToHome, initialDemoId }) => {
   const [filter, setFilter] = useState<'all' | 'banca' | 'ciberseguridad'>('all');
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [previewModalDemo, setPreviewModalDemo] = useState<DemoItem | null>(null);
@@ -176,36 +122,149 @@ export const DemosPage: React.FC<DemosPageProps> = ({ onBackToHome, onOpenLogin,
     <div className="min-h-screen text-white pb-20">
       
       {/* Breadcrumb & Navigation Sub-Bar for Demos Page */}
-      <div className="bg-[#060c2c]/90 border-b border-purple-500/30 backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
+      <div className="bg-[#060c2c]/95 border-b border-purple-500/30 backdrop-blur-xl sticky top-20 z-40">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <button
               onClick={onBackToHome}
-              className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 hover:text-white border border-purple-400/30 text-xs font-bold transition-all shadow-xs group cursor-pointer"
+              className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-white border-2 border-cyan-400/50 hover:border-cyan-300 text-xs font-black transition-all shadow-md shadow-cyan-950/40 group cursor-pointer"
+              title="Regresar a la Portada de Cifra Flow"
             >
+              <img 
+                src={cifraLogo} 
+                alt="Logo Portada Cifra Flow" 
+                className="w-5 h-5 rounded-md object-contain bg-slate-950 p-0.5 border border-purple-400/40"
+              />
               <ArrowLeft className="w-4 h-4 text-cyan-400 group-hover:-translate-x-1 transition-transform" />
-              <span>Volver a la Portada</span>
+              <span>Regresar a la Portada de Cifra Flow</span>
             </button>
-            <span className="hidden sm:inline text-xs text-slate-400">
-              Inicio <span className="mx-1.5">/</span> <strong className="text-white">Catálogo de Demos en Vivo</strong>
+            <span className="hidden md:inline text-xs text-slate-400">
+              Inicio <span className="mx-1.5">/</span> <strong className="text-white">Demo Oficial en Vivo</strong>
             </span>
           </div>
 
-          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-purple-950/70 border border-purple-400/40 text-cyan-300 text-xs font-semibold">
+          <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-950/80 border border-purple-400/40 text-cyan-300 text-xs font-bold">
             <span className="flex h-2 w-2 rounded-full bg-cyan-400 animate-ping" />
-            <span>3 Demos Operativas en Vivo</span>
+            <span>PWA Oficial en Tiempo Real</span>
           </div>
         </div>
       </div>
 
+      {/* 1. EMBEDDED INTERACTIVE LIVE DEMO SHOWCASE (EXACTLY AS IN USER SCREENSHOT) */}
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8">
+        
+        {/* Main Demo Container Box */}
+        <div className="bg-[#070e30]/95 rounded-3xl border-2 border-purple-400/50 shadow-[0_0_45px_rgba(0,240,255,0.2)] overflow-hidden">
+          
+          {/* Header Bar */}
+          <div className="p-3.5 sm:p-5 bg-slate-950/95 border-b border-purple-500/30 flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="relative h-12 w-12 rounded-xl overflow-hidden border border-purple-400/50 bg-slate-900 p-0.5 shadow-md shrink-0">
+                <img src={cifraLogo} alt="Cifra Flow Logo" className="w-full h-full object-contain rounded-lg" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="font-display font-extrabold text-sm sm:text-lg text-white">
+                    Cifra Flow Financiero • Demo Oficial en Vivo
+                  </span>
+                  <span className="flex items-center gap-1 text-[10px] sm:text-xs font-bold text-emerald-300 bg-emerald-950/80 px-2.5 py-0.5 rounded-full border border-emerald-500/50">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    PWA Producción
+                  </span>
+                </div>
+                <span className="text-xs sm:text-sm text-cyan-300 font-mono">https://cifraflow-demo-01-prod.web.app/</span>
+              </div>
+            </div>
+
+            {/* Top Pill Button: REGRESAR A LA PORTADA DE CIFRA FLOW */}
+            <button
+              onClick={onBackToHome}
+              className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-500 hover:from-purple-500 hover:via-indigo-500 hover:to-cyan-400 text-white font-black text-xs uppercase tracking-wider shadow-lg shadow-purple-500/35 hover:shadow-[0_0_25px_rgba(0,240,255,0.55)] border border-cyan-400/60 cursor-pointer transition-all transform hover:scale-[1.02] active:scale-95 group"
+              title="Regresar a la Portada de Cifra Flow"
+            >
+              <img src={cifraLogo} alt="Cifra Flow" className="w-4 h-4 rounded-full object-cover border border-white/60" />
+              <ArrowLeft className="w-4 h-4 text-white group-hover:-translate-x-1 transition-transform" />
+              <span>REGRESAR A LA PORTADA DE CIFRA FLOW</span>
+            </button>
+          </div>
+
+          {/* Iframe Viewport with Pinned Floating Return Button */}
+          <div className="relative w-full h-[650px] sm:h-[720px] bg-slate-950">
+            
+            {/* Floating Return Button directly pinned in the demo frame */}
+            <button
+              onClick={onBackToHome}
+              className="absolute top-4 left-4 z-20 flex items-center gap-2 px-4 py-2 rounded-full bg-slate-950/95 hover:bg-purple-950 text-white text-xs font-black border-2 border-cyan-400 shadow-[0_0_25px_rgba(0,240,255,0.65)] backdrop-blur-md transition-all hover:scale-105 active:scale-95 cursor-pointer group"
+              title="Regresar a la Portada de Cifra Flow"
+            >
+              <img src={cifraLogo} alt="Cifra Flow" className="w-4 h-4 rounded-full object-cover border border-purple-400/50" />
+              <ArrowLeft className="w-4 h-4 text-cyan-300 group-hover:-translate-x-0.5 transition-transform" />
+              <span>Regresar a la Portada</span>
+            </button>
+
+            <a
+              href="https://cifraflow-demo-01-prod.web.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="absolute top-4 right-4 z-20 flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-900/90 hover:bg-slate-800 text-slate-200 hover:text-white text-xs font-bold border border-purple-400/40 backdrop-blur-md shadow-md cursor-pointer transition-all"
+              title="Abrir en pantalla completa o nueva pestaña"
+            >
+              <span>Pantalla Completa</span>
+              <ExternalLink className="w-3.5 h-3.5 text-cyan-300" />
+            </a>
+
+            <iframe
+              src="https://cifraflow-demo-01-prod.web.app/"
+              title="Demo Oficial Cifra Flow Financiero"
+              className="w-full h-full border-0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+            />
+          </div>
+
+          {/* Bottom Status inside Demo Box */}
+          <div className="p-3.5 bg-slate-950/95 border-t border-purple-500/25 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-300 px-5 sm:px-6">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-cyan-400" />
+              <span>Simulación PWA interactiva oficial Cifra Flow Financiero</span>
+            </div>
+
+            <button
+              onClick={onBackToHome}
+              className="text-cyan-300 hover:text-white font-bold flex items-center gap-1.5 underline cursor-pointer transition-colors"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Volver a la Portada Principal</span>
+            </button>
+          </div>
+
+        </div>
+
+        {/* Big Centered Return Button Below Container (as in the screenshot!) */}
+        <div className="mt-8 mb-10 flex items-center justify-center">
+          <button
+            onClick={onBackToHome}
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-3.5 px-9 py-4 rounded-2xl bg-[#090f2b] hover:bg-purple-950/80 text-white font-extrabold text-base border-2 border-cyan-400/70 hover:border-cyan-300 shadow-[0_0_30px_rgba(0,240,255,0.35)] hover:shadow-[0_0_35px_rgba(0,240,255,0.55)] transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer group"
+            title="Regresar a la Portada de Cifra Flow"
+          >
+            <div className="w-7 h-7 rounded-xl bg-slate-950 p-0.5 border border-purple-400/40 flex items-center justify-center overflow-hidden">
+              <img src={cifraLogo} alt="Portada Cifra Flow" className="w-full h-full object-contain" />
+            </div>
+            <ArrowLeft className="w-5 h-5 text-cyan-400 group-hover:-translate-x-1.5 transition-transform" />
+            <span>Regresar a la Portada de Cifra Flow</span>
+          </button>
+        </div>
+
+      </div>
+
       {/* Hero Section of Demos Page */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 pb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-8 border-t border-purple-500/20">
         
         <div className="text-center max-w-3xl mx-auto space-y-4">
           
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-950/60 border border-cyan-400/40 text-cyan-300 text-xs font-bold uppercase tracking-wider backdrop-blur-md">
             <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Entornos PWA en Tiempo Real</span>
+            <span>Entorno PWA en Tiempo Real</span>
           </div>
 
           <h1 className="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white tracking-tight leading-tight">
@@ -216,52 +275,42 @@ export const DemosPage: React.FC<DemosPageProps> = ({ onBackToHome, onOpenLogin,
           </h1>
 
           <p className="text-sm sm:text-base text-slate-200 leading-relaxed font-normal">
-            Explora las implementaciones interactivas diseñadas a medida para nuestros aliados estratégicos en el sector bancario y de ciberdefensa. <strong className="text-white font-semibold">Haz clic en cualquiera de las demos para abrirlas directamente</strong> en tu navegador o dispositivo.
+            Explora la plataforma interactiva oficial de Cifra Flow Financiero en tiempo real. <strong className="text-white font-semibold">Haz clic en "Demos en Vivo" o en la tarjeta para abrirla directamente</strong> en tu navegador o dispositivo.
           </p>
 
-          {/* Filter Pills */}
-          <div className="pt-4 flex flex-wrap items-center justify-center gap-2.5">
-            <button
-              onClick={() => setFilter('all')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-                filter === 'all'
-                  ? 'bg-gradient-to-r from-purple-600 to-cyan-600 text-white shadow-md ring-2 ring-cyan-400/40'
-                  : 'bg-slate-900/90 text-slate-200 hover:text-white border border-purple-400/30 hover:border-cyan-400/60 shadow-xs'
-              }`}
+          {/* Primary Action Buttons: Demos en Vivo + Regresar a la Portada */}
+          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3.5">
+            <a
+              href="https://cifraflow-demo-01-prod.web.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-500 hover:from-purple-500 hover:via-indigo-500 hover:to-cyan-400 text-white font-extrabold text-base tracking-wide shadow-xl shadow-purple-500/35 hover:shadow-[0_0_30px_rgba(0,240,255,0.45)] transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer group"
+              title="Abrir Demo en Vivo: https://cifraflow-demo-01-prod.web.app/"
             >
-              <Layers className="w-3.5 h-3.5" />
-              <span>Todos los Demos ({DEMOS_LIST.length})</span>
-            </button>
+              <Sparkles className="w-5 h-5 text-cyan-200 group-hover:scale-110 transition-transform" />
+              <span>Demos en Vivo</span>
+              <ExternalLink className="w-5 h-5 text-cyan-200 group-hover:translate-x-1 transition-transform" />
+            </a>
 
             <button
-              onClick={() => setFilter('banca')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-                filter === 'banca'
-                  ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md ring-2 ring-emerald-400/40'
-                  : 'bg-slate-900/90 text-slate-200 hover:text-emerald-300 border border-purple-400/30 hover:border-emerald-400/50 shadow-xs'
-              }`}
+              onClick={onBackToHome}
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-7 py-4 rounded-2xl bg-gradient-to-r from-slate-900 via-purple-950 to-slate-900 hover:from-purple-900 hover:to-indigo-900 text-white border-2 border-cyan-400/60 hover:border-cyan-300 font-extrabold text-base tracking-wide shadow-xl shadow-cyan-950/40 hover:shadow-[0_0_25px_rgba(0,240,255,0.4)] transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer group"
+              title="Regresar a la Portada de Cifra Flow"
             >
-              <Landmark className="w-3.5 h-3.5" />
-              <span>Banca & Finanzas (2)</span>
-            </button>
-
-            <button
-              onClick={() => setFilter('ciberseguridad')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-                filter === 'ciberseguridad'
-                  ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-md ring-2 ring-cyan-400/40'
-                  : 'bg-slate-900/90 text-slate-200 hover:text-cyan-300 border border-purple-400/30 hover:border-cyan-400/50 shadow-xs'
-              }`}
-            >
-              <ShieldCheck className="w-3.5 h-3.5" />
-              <span>Ciberseguridad (1)</span>
+              <img 
+                src={cifraLogo} 
+                alt="Portada Cifra Flow" 
+                className="w-6 h-6 rounded-lg object-contain bg-slate-950 p-0.5 border border-purple-400/40 group-hover:scale-105 transition-transform" 
+              />
+              <ArrowLeft className="w-5 h-5 text-cyan-400 group-hover:-translate-x-1.5 transition-transform" />
+              <span>Regresar a la Portada de Cifra Flow</span>
             </button>
           </div>
 
         </div>
 
         {/* Demo Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 pt-10">
+        <div className="max-w-3xl mx-auto pt-10">
           {filteredDemos.map((demo) => {
             return (
               <div
@@ -406,16 +455,31 @@ export const DemosPage: React.FC<DemosPageProps> = ({ onBackToHome, onOpenLogin,
                     <ExternalLink className="w-4 h-4 text-slate-950" />
                   </a>
 
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setPreviewModalDemo(demo);
-                    }}
-                    className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 hover:text-white text-xs font-bold border border-purple-400/30 transition-colors cursor-pointer"
-                  >
-                    <Smartphone className="w-3.5 h-3.5 text-cyan-400" />
-                    <span>Vista Previa en Simulador</span>
-                  </button>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setPreviewModalDemo(demo);
+                      }}
+                      className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-slate-200 hover:text-white text-xs font-bold border border-purple-400/30 transition-colors cursor-pointer"
+                    >
+                      <Smartphone className="w-3.5 h-3.5 text-cyan-400" />
+                      <span>Vista Previa en Simulador</span>
+                    </button>
+
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onBackToHome();
+                      }}
+                      className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-purple-950/60 hover:bg-purple-900/80 text-white text-xs font-bold border border-purple-400/40 hover:border-cyan-400 transition-colors cursor-pointer group"
+                      title="Regresar a la Portada de Cifra Flow"
+                    >
+                      <img src={cifraLogo} alt="Cifra Flow" className="w-3.5 h-3.5 rounded-full object-cover" />
+                      <ArrowLeft className="w-3.5 h-3.5 text-cyan-400 group-hover:-translate-x-0.5 transition-transform" />
+                      <span>Volver a Portada</span>
+                    </button>
+                  </div>
                 </div>
 
               </div>
@@ -423,72 +487,21 @@ export const DemosPage: React.FC<DemosPageProps> = ({ onBackToHome, onOpenLogin,
           })}
         </div>
 
-        {/* Informative Guidance & Mobile PWA Installation Section */}
-        <div className="mt-14 bg-slate-900/95 rounded-3xl p-6 sm:p-10 border border-purple-400/40 backdrop-blur-xl shadow-2xl text-white">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
-            <div className="lg:col-span-8 space-y-4">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-900/60 border border-purple-400/40 text-cyan-300 text-xs font-bold uppercase shadow-sm">
-                <Smartphone className="w-3.5 h-3.5 text-cyan-400" />
-                <span>Tecnología PWA (Progressive Web App)</span>
-              </div>
-
-              <h3 className="font-display font-black text-2xl sm:text-3xl text-white">
-                ¿Cómo probar las demos como App Nativa en tu Teléfono?
-              </h3>
-
-              <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-normal">
-                Todas las demos están construidas bajo el estándar <strong className="text-cyan-300 font-bold">PWA</strong>, lo que significa que no requieren descargas desde Google Play o App Store:
-              </p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
-                <div className="p-4 rounded-2xl bg-slate-950/80 border border-purple-500/30 space-y-1.5 shadow-sm">
-                  <div className="text-xs font-bold text-purple-300">Paso 1</div>
-                  <div className="text-xs font-bold text-white">Abre en tu Móvil</div>
-                  <p className="text-[11px] text-slate-300">Abre el enlace de cualquiera de los 3 demos en Safari (iOS) o Chrome (Android).</p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-slate-950/80 border border-purple-500/30 space-y-1.5 shadow-sm">
-                  <div className="text-xs font-bold text-cyan-300">Paso 2</div>
-                  <div className="text-xs font-bold text-white">Agregar a Inicio</div>
-                  <p className="text-[11px] text-slate-300">Presiona "Compartir / Más Opciones" y selecciona "Agregar a pantalla principal".</p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-slate-950/80 border border-purple-500/30 space-y-1.5 shadow-sm">
-                  <div className="text-xs font-bold text-emerald-300">Paso 3</div>
-                  <div className="text-xs font-bold text-white">¡Listo para Usar!</div>
-                  <p className="text-[11px] text-slate-300">Se abrirá a pantalla completa sin barra de navegación, consumiendo mínimos datos.</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="lg:col-span-4 flex flex-col items-center justify-center p-6 rounded-2xl bg-slate-950/90 border border-purple-400/40 text-center space-y-3 shadow-xl">
-              <div className="w-12 h-12 rounded-2xl bg-purple-900/60 text-cyan-300 border border-purple-400/40 flex items-center justify-center">
-                <Sparkles className="w-6 h-6 text-cyan-400" />
-              </div>
-              <div className="font-display font-black text-white text-sm">
-                ¿Deseas una Demo Personalizada para tu Institución?
-              </div>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Diseñamos módulos temáticos y branding exclusivo para bancos, aseguradoras e instituciones que deseen patrocinar escuelas.
-              </p>
-              <button
-                onClick={() => {
-                  onBackToHome();
-                  setTimeout(() => {
-                    const contactSection = document.getElementById('contacto');
-                    if (contactSection) {
-                      contactSection.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }, 150);
-                }}
-                className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-500 hover:to-cyan-500 text-white font-black text-xs uppercase tracking-wider shadow-md transition-all cursor-pointer"
-              >
-                Solicitar Alianza o Patrocinio
-              </button>
-            </div>
-
-          </div>
+        {/* Return to Portada Bottom Action Bar */}
+        <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <button
+            onClick={onBackToHome}
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-slate-900 via-purple-950 to-slate-900 hover:from-purple-900 hover:to-indigo-900 text-white font-extrabold text-base border-2 border-cyan-400/60 hover:border-cyan-300 shadow-xl shadow-purple-950/40 hover:shadow-[0_0_25px_rgba(0,240,255,0.4)] transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer group"
+            title="Regresar a la Portada de Cifra Flow"
+          >
+            <img 
+              src={cifraLogo} 
+              alt="Portada Cifra Flow" 
+              className="w-7 h-7 rounded-xl object-contain bg-slate-950 p-0.5 border border-purple-400/40" 
+            />
+            <ArrowLeft className="w-5 h-5 text-cyan-400 group-hover:-translate-x-1.5 transition-transform" />
+            <span>Regresar a la Portada de Cifra Flow</span>
+          </button>
         </div>
 
       </div>
@@ -521,11 +534,24 @@ export const DemosPage: React.FC<DemosPageProps> = ({ onBackToHome, onOpenLogin,
               </div>
 
               <div className="flex items-center gap-2">
+                <button
+                  onClick={() => {
+                    setPreviewModalDemo(null);
+                    onBackToHome();
+                  }}
+                  className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white text-xs font-extrabold transition-all cursor-pointer border border-cyan-400/50 shadow-md hover:shadow-[0_0_15px_rgba(0,240,255,0.4)]"
+                  title="Regresar a la Portada de Cifra Flow"
+                >
+                  <img src={cifraLogo} alt="Cifra Flow" className="w-4 h-4 rounded-full object-cover border border-white/60" />
+                  <ArrowLeft className="w-3.5 h-3.5 text-cyan-200" />
+                  <span>Regresar a la Portada</span>
+                </button>
+
                 <a
                   href={previewModalDemo.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold transition-colors"
+                  className="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white text-xs font-bold transition-colors border border-purple-400/30"
                 >
                   <span>Abrir en Nueva Pestaña</span>
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -542,8 +568,22 @@ export const DemosPage: React.FC<DemosPageProps> = ({ onBackToHome, onOpenLogin,
             </div>
 
             {/* Iframe Viewport */}
-            <div className="flex-1 bg-slate-950 p-2 sm:p-4 flex items-center justify-center overflow-hidden">
+            <div className="flex-1 bg-slate-950 p-2 sm:p-4 flex items-center justify-center overflow-hidden relative">
               <div className="w-full h-full max-w-md bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border-4 border-slate-800 relative">
+                {/* Floating button directly inside modal preview viewport */}
+                <button
+                  onClick={() => {
+                    setPreviewModalDemo(null);
+                    onBackToHome();
+                  }}
+                  className="absolute top-3 left-3 z-30 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-950/95 hover:bg-purple-950 text-white text-xs font-black border-2 border-cyan-400 shadow-[0_0_20px_rgba(0,240,255,0.6)] backdrop-blur-md cursor-pointer transition-all hover:scale-105 active:scale-95"
+                  title="Regresar a la Portada de Cifra Flow"
+                >
+                  <img src={cifraLogo} alt="Cifra Flow" className="w-4 h-4 rounded-full object-cover border border-purple-400/50" />
+                  <ArrowLeft className="w-3.5 h-3.5 text-cyan-300" />
+                  <span>Regresar a la Portada</span>
+                </button>
+
                 <iframe
                   src={previewModalDemo.url}
                   title={previewModalDemo.title}
