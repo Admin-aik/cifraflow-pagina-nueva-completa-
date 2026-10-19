@@ -13,6 +13,7 @@ import { DemosPage } from './components/DemosPage';
 import { PlatformModulesSection } from './components/PlatformModulesSection';
 import { InstitutionalContactSection } from './components/InstitutionalContactSection';
 import { IntroScreen } from './components/IntroScreen';
+import { HeroSlider } from './components/HeroSlider';
 import { 
   ArrowLeft, 
   ShieldCheck, 
@@ -23,7 +24,6 @@ import {
   TrendingUp, 
   Smartphone, 
   Layers, 
-  Mail, 
   ChevronRight,
   ExternalLink,
   CheckCircle2,
@@ -171,15 +171,23 @@ export default function App() {
         activeView={currentView}
         onNavigate={handleNavigate}
         onOpenShare={() => setShareModalOpen(true)}
+        onReplayIntro={() => setShowIntro(true)}
       />
 
       {/* 2. MAIN APPLICATION VIEW CONTAINER (Offset by fixed navbar height) */}
       <div className="relative z-10 pt-20 sm:pt-22">
         
-        {/* VIEW 1: INICIO (PORTADA HERO PRINCIPAL EXACTA) */}
+        {/* VIEW 1: INICIO (PORTADA HERO PRINCIPAL EXACTA CON SLIDER SUPERIOR) */}
         {currentView === 'portada' && (
           <>
-            {/* La sección exacta de la captura: Portada Hero con texto a la izquierda y multimedia a la derecha */}
+            {/* Slider en la parte superior de la portada */}
+            <HeroSlider 
+              onOpenDemos={() => handleNavigate('demos')}
+              onOpenSponsorship={() => handleNavigate('alianzas')}
+              onNavigate={(view) => handleNavigate(view as PageView)}
+            />
+
+            {/* La sección exacta: Portada Hero con texto a la izquierda y multimedia a la derecha */}
             <HeroSection 
               onExploreDemo={() => handleNavigate('simulador-pwa')}
               onOpenSponsorship={() => handleNavigate('alianzas')}
@@ -193,32 +201,24 @@ export default function App() {
               <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 h-full py-3 sm:py-0 flex flex-col md:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-slate-300">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="font-bold text-white text-sm">CifraFlow financiero:</span>
-                  <span className="text-slate-300">marca registrada por AIK SOLUCIONES ESTRATEGICAS, C.A. RIF es J-50807601-0.</span>
+                  <span className="text-slate-300">marca registrada en el SAPI por AIK SOLUCIONES ESTRATEGICAS, C.A. RIF es J-50807601-0.</span>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-3">
-                  <a
-                    href="mailto:aik.info@aiksoluciones.com?subject=Contacto%20Institucional%20Cifra%20Flow"
-                    className="text-cyan-300 hover:text-cyan-100 underline cursor-pointer font-bold flex items-center gap-1.5 transition-colors"
-                    title="Enviar correo a aik.info@aiksoluciones.com"
-                  >
-                    <Mail className="w-4 h-4 text-cyan-400" />
-                    <span>aik.info@aiksoluciones.com</span>
-                  </a>
-                  <span className="text-slate-500 hidden sm:inline">•</span>
+                <div className="flex items-center">
                   <button
-                    onClick={() => handleOpenContactModal()}
-                    className="text-purple-300 hover:text-purple-100 underline cursor-pointer font-semibold flex items-center gap-1 transition-colors"
+                    onClick={() => {
+                      handleNavigate('contacto');
+                      setTimeout(() => {
+                        const section = document.getElementById('contacto') || document.getElementById('contacto-institucional');
+                        if (section) {
+                          section.scrollIntoView({ behavior: 'smooth' });
+                        }
+                      }, 50);
+                    }}
+                    className="text-cyan-300 hover:text-cyan-100 underline cursor-pointer font-black text-lg sm:text-xl md:text-2xl tracking-wide transition-all hover:scale-105 drop-shadow-[0_0_12px_rgba(0,240,255,0.45)]"
+                    title="Ir a Contacto Institucional Cifra Flow"
                   >
-                    <span>Formulario Institucional</span>
-                  </button>
-                  <span className="text-slate-500 hidden sm:inline">•</span>
-                  <button
-                    onClick={() => handleNavigate('demos')}
-                    className="text-cyan-300 hover:text-cyan-100 underline cursor-pointer font-bold flex items-center gap-1.5 transition-colors"
-                  >
-                    <Sparkles className="w-4 h-4 text-cyan-300" />
-                    <span>Demos en Vivo</span>
+                    Contáctanos
                   </button>
                 </div>
               </div>
@@ -350,10 +350,23 @@ export default function App() {
                 <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 h-full py-3 sm:py-0 flex flex-col md:flex-row items-center justify-between gap-3 text-xs sm:text-sm text-slate-300">
                   <div className="flex flex-wrap items-center gap-2">
                     <span className="font-bold text-white text-sm">CifraFlow financiero:</span>
-                    <span className="text-slate-300">marca registrada por AIK SOLUCIONES ESTRATEGICAS, C.A. RIF es J-50807601-0.</span>
+                    <span className="text-slate-300">marca registrada en el SAPI por AIK SOLUCIONES ESTRATEGICAS, C.A. RIF es J-50807601-0.</span>
                   </div>
 
                   <div className="flex flex-wrap items-center gap-3">
+                    <button
+                      onClick={() => {
+                        const section = document.getElementById('contacto-institucional') || document.getElementById('contacto');
+                        if (section) {
+                          section.scrollIntoView({ behavior: 'smooth' });
+                        }
+                      }}
+                      className="text-cyan-300 hover:text-cyan-100 underline cursor-pointer font-black text-base sm:text-lg tracking-wide transition-colors group"
+                      title="Formulario de Contacto Institucional"
+                    >
+                      <span>Contáctanos</span>
+                    </button>
+                    <span className="text-slate-500 hidden sm:inline">•</span>
                     <button
                       onClick={() => handleNavigate('demos')}
                       className="text-cyan-300 hover:text-cyan-100 underline cursor-pointer font-bold flex items-center gap-1.5 transition-colors"

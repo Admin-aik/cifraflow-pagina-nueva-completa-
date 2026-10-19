@@ -274,7 +274,7 @@ export const SponsorshipB2B: React.FC<SponsorshipB2BProps> = ({ onOpenContactMod
             <div className="text-center space-y-2">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-900/60 border border-purple-400/40 text-cyan-300 text-xs font-bold tracking-wider uppercase">
                 <Sparkles className="w-3.5 h-3.5 text-cyan-400" />
-                <span>Infografía Oficial</span>
+                <span>Planes de Patrocinio Oficiales</span>
               </div>
               <h3 className="font-display font-black text-2xl sm:text-3xl text-white">
                 Tres niveles de <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-cyan-300">participación</span>

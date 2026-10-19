@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Sparkles, Shield, ArrowRight, Zap, Play, Volume2, VolumeX, CheckCircle2 } from 'lucide-react';
-import cifraLogo from '../assets/images/cifra_flow_logo_1787321881768.jpg';
+import React, { useState, useEffect, useRef } from 'react';
+import { ArrowRight, Volume2, VolumeX } from 'lucide-react';
 import cifraIntroCoop from '../assets/images/cifra_intro_coop_1791196947440.jpg';
 import cifraIntroBoy from '../assets/images/cifra_intro_boy_1791196959039.jpg';
 import cifraIntroGirl from '../assets/images/cifra_intro_girl_1791196976364.jpg';
@@ -9,230 +8,551 @@ interface IntroScreenProps {
   onFinish: () => void;
 }
 
-export const IntroScreen: React.FC<IntroScreenProps> = ({ onFinish }) => {
-  const [secondsRemaining, setSecondsRemaining] = useState(5);
-  const [progress, setProgress] = useState(0);
-  const [isFadingOut, setIsFadingOut] = useState(false);
-  const [soundEnabled, setSoundEnabled] = useState(false);
+interface IntroStep {
+  step: number;
+  image: string;
+  accentHex: string;
+  accentGlow: string;
+}
 
-  // Play subtle futuristic synth tone using Web Audio API if sound is enabled
-  const playBeep = (freq = 880, duration = 0.1) => {
+const INTRO_STEPS: IntroStep[] = [
+  {
+    step: 1,
+    image: cifraIntroCoop,
+    accentHex: '#00f0ff',
+    accentGlow: 'rgba(0, 240, 255, 0.75)',
+  },
+  {
+    step: 2,
+    image: cifraIntroBoy,
+    accentHex: '#e879f9',
+    accentGlow: 'rgba(232, 121, 249, 0.75)',
+  },
+  {
+    step: 3,
+    image: cifraIntroGirl,
+    accentHex: '#fde047',
+    accentGlow: 'rgba(253, 224, 71, 0.75)',
+  },
+];
+
+// Helper to synthesize a high-fidelity 16-bit PCM WAV Galactic Video Game Intro Soundtrack
+// Includes progressive fade-out naturally starting at step 2 (t >= 1.2s)
+function createGalacticIntroWavBlob(): Blob {
+  const sampleRate = 22050;
+  const numChannels = 1;
+  const duration = 5.2; // 5.2 seconds of galactic soundtrack
+  const numSamples = Math.floor(sampleRate * duration);
+  const data = new Float32Array(numSamples);
+
+  // Multi-track galactic video game composition:
+  for (let i = 0; i < numSamples; i++) {
+    const t = i / sampleRate;
+    let sample = 0;
+
+    // 1. Cosmic Sub-Bass Driver (D minor progression: D2 73.4Hz -> Bb1 58.3Hz -> F2 87.3Hz)
+    const bassFreq = t < 1.8 ? 73.42 : t < 3.4 ? 58.27 : 73.42;
+    const bassSaw = 2 * ((t * bassFreq) % 1) - 1;
+    const bassSine = Math.sin(2 * Math.PI * bassFreq * t);
+    const bassEnv = Math.min(1, t * 2.5);
+    sample += (bassSaw * 0.15 + bassSine * 0.3) * bassEnv;
+
+    // 2. Ethereal Galactic Space Pads (Dual detuned chords: Dm9, Bbmaj7, D Major 9)
+    const padFreqs =
+      t < 1.8
+        ? [146.83, 174.61, 220.0, 261.63, 329.63] // D3, F3, A3, C4, E4
+        : t < 3.4
+        ? [116.54, 146.83, 174.61, 220.0, 293.66] // Bb2, D3, F3, A3, D4
+        : [146.83, 220.0, 293.66, 369.99, 440.0, 587.33]; // D3, A3, D4, F#4, A4, D5
+
+    let padSample = 0;
+    for (let p = 0; p < padFreqs.length; p++) {
+      const pf = padFreqs[p];
+      padSample +=
+        Math.sin(2 * Math.PI * pf * t) +
+        0.55 * Math.sin(2 * Math.PI * (pf * 1.006) * t) +
+        0.55 * Math.sin(2 * Math.PI * (pf * 0.994) * t);
+    }
+    padSample /= padFreqs.length * 1.6;
+    const padEnv = Math.min(1, t * 1.8);
+    sample += padSample * 0.35 * padEnv;
+
+    // 3. Sparkling Starlight Space Arpeggio Lead (Fast 16th notes dancing across cosmos)
+    const arpNotes = [587.33, 739.99, 880.0, 1046.5, 1174.66, 1479.98, 1760.0, 2093.0];
+    const arpIndex = Math.floor(t * 7.5) % arpNotes.length;
+    const arpF = arpNotes[arpIndex];
+    const arpFraction = t * 7.5 - Math.floor(t * 7.5);
+    const arpEnv = Math.exp(-arpFraction * 4.0);
+    sample += Math.sin(2 * Math.PI * arpF * t) * 0.25 * arpEnv;
+
+    // 4. Hyperdrive Warp Charge Sound Effect (rising between 2.0s and 3.8s)
+    if (t > 2.0 && t < 4.0) {
+      const warpT = (t - 2.0) / 2.0;
+      const warpFreq = 260 + warpT * warpT * 3500;
+      const noise = Math.random() * 2 - 1;
+      const warpEnv = Math.sin(warpT * Math.PI);
+      sample += (noise * 0.1 + Math.sin(2 * Math.PI * warpFreq * t) * 0.16) * warpEnv;
+    }
+
+    // 5. Climax Launch Fanfare Chime (after 3.2s)
+    if (t > 3.2) {
+      const chimeT = t - 3.2;
+      const chimeEnv = Math.exp(-chimeT * 1.6);
+      sample +=
+        (Math.sin(2 * Math.PI * 587.33 * t) +
+          Math.sin(2 * Math.PI * 880.0 * t) +
+          Math.sin(2 * Math.PI * 1174.66 * t) +
+          Math.sin(2 * Math.PI * 1760.0 * t)) *
+        0.12 *
+        chimeEnv;
+    }
+
+    // Progressive Fade-Out starting smoothly at Step 2 (t >= 1.2s)
+    if (t >= 1.2) {
+      const fadeProgress = Math.min(1.0, (t - 1.2) / (4.1 - 1.2));
+      const fadeFactor = 0.5 * (1 + Math.cos(fadeProgress * Math.PI));
+      sample *= fadeFactor;
+    }
+    if (t >= 4.1) {
+      sample = 0;
+    }
+
+    // Safety limiter
+    data[i] = Math.max(-0.95, Math.min(0.95, sample));
+  }
+
+  // Build standard WAV container
+  const byteRate = sampleRate * numChannels * 2;
+  const blockAlign = numChannels * 2;
+  const wavBuffer = new ArrayBuffer(44 + numSamples * 2);
+  const view = new DataView(wavBuffer);
+
+  const writeString = (offset: number, str: string) => {
+    for (let j = 0; j < str.length; j++) {
+      view.setUint8(offset + j, str.charCodeAt(j));
+    }
+  };
+
+  writeString(0, 'RIFF');
+  view.setUint32(4, 36 + numSamples * 2, true);
+  writeString(8, 'WAVE');
+
+  writeString(12, 'fmt ');
+  view.setUint32(16, 16, true);
+  view.setUint16(20, 1, true); // PCM
+  view.setUint16(22, numChannels, true);
+  view.setUint32(24, sampleRate, true);
+  view.setUint32(28, byteRate, true);
+  view.setUint16(32, blockAlign, true);
+  view.setUint16(34, 16, true);
+
+  writeString(36, 'data');
+  view.setUint32(40, numSamples * 2, true);
+
+  let offset = 44;
+  for (let i = 0; i < numSamples; i++) {
+    const s = Math.max(-1, Math.min(1, data[i]));
+    const intSample = s < 0 ? s * 0x8000 : s * 0x7fff;
+    view.setInt16(offset, intSample, true);
+    offset += 2;
+  }
+
+  return new Blob([wavBuffer], { type: 'audio/wav' });
+}
+
+export const IntroScreen: React.FC<IntroScreenProps> = ({ onFinish }) => {
+  // Steps: 1 -> 2 -> 3
+  const [currentStep, setCurrentStep] = useState<number>(1);
+  const [progress, setProgress] = useState<number>(0);
+  const [isFadingOut, setIsFadingOut] = useState<boolean>(false);
+  const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
+  const [isPlayingAudio, setIsPlayingAudio] = useState<boolean>(false);
+
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audioBlobUrlRef = useRef<string | null>(null);
+  const audioCtxRef = useRef<AudioContext | null>(null);
+  const masterGainRef = useRef<GainNode | null>(null);
+  const fadeIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Progressive Volume Fade-Out Engine
+  // Gradually ramps down volume starting when reaching step 2
+  const startProgressiveAudioFade = (durationMs: number = 2800) => {
+    if (fadeIntervalRef.current) {
+      clearInterval(fadeIntervalRef.current);
+    }
+    const startTime = performance.now();
+    const initialVolume = audioRef.current ? audioRef.current.volume : 1.0;
+
+    fadeIntervalRef.current = setInterval(() => {
+      const elapsed = performance.now() - startTime;
+      const fadeProgress = Math.min(1.0, elapsed / durationMs);
+
+      // Acoustic S-curve decay (smooth cosine taper: 1.0 -> 0.0)
+      const factor = 0.5 * (1 + Math.cos(fadeProgress * Math.PI));
+      const targetVolume = Math.max(0, initialVolume * factor);
+
+      if (audioRef.current) {
+        audioRef.current.volume = targetVolume;
+      }
+
+      // Simultaneously ramp down Web Audio fallback if active
+      if (masterGainRef.current && audioCtxRef.current) {
+        try {
+          masterGainRef.current.gain.setValueAtTime(
+            targetVolume * 0.25,
+            audioCtxRef.current.currentTime
+          );
+        } catch {}
+      }
+
+      if (fadeProgress >= 1.0) {
+        if (fadeIntervalRef.current) {
+          clearInterval(fadeIntervalRef.current);
+          fadeIntervalRef.current = null;
+        }
+        if (audioRef.current) {
+          audioRef.current.pause();
+          audioRef.current.volume = 0;
+        }
+      }
+    }, 30);
+  };
+
+  // Initialize and play the Galactic Audio
+  const playGalacticAudio = async () => {
     try {
-      const audioCtx = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-      gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start();
-      osc.stop(audioCtx.currentTime + duration);
+      if (audioRef.current) {
+        audioRef.current.volume = 1.0;
+        audioRef.current.currentTime = 0;
+        const playPromise = audioRef.current.play();
+        if (playPromise !== undefined) {
+          await playPromise;
+          setIsPlayingAudio(true);
+          return;
+        }
+      }
+    } catch {}
+
+    try {
+      const AudioCtxClass =
+        window.AudioContext ||
+        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      if (AudioCtxClass) {
+        if (!audioCtxRef.current) {
+          audioCtxRef.current = new AudioCtxClass();
+          const master = audioCtxRef.current.createGain();
+          master.gain.setValueAtTime(0.3, audioCtxRef.current.currentTime);
+          master.connect(audioCtxRef.current.destination);
+          masterGainRef.current = master;
+        }
+        const ctx = audioCtxRef.current;
+        if (ctx.state === 'suspended') {
+          await ctx.resume();
+        }
+
+        const now = ctx.currentTime;
+        const freqs = [146.83, 220.0, 293.66, 440.0, 587.33];
+        freqs.forEach((f) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(f, now);
+          gain.gain.setValueAtTime(0.2, now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 4.0);
+          osc.connect(gain);
+          if (masterGainRef.current) {
+            gain.connect(masterGainRef.current);
+          } else {
+            gain.connect(ctx.destination);
+          }
+          osc.start(now);
+          osc.stop(now + 4.1);
+        });
+
+        setIsPlayingAudio(true);
+      }
     } catch {
-      // AudioContext not permitted or muted
+      setIsPlayingAudio(false);
     }
   };
 
   useEffect(() => {
-    const totalDuration = 5000; // 5 seconds
-    const intervalTime = 50;
-    const steps = totalDuration / intervalTime;
-    let stepCount = 0;
+    // Generate native WAV blob once on mount
+    try {
+      const blob = createGalacticIntroWavBlob();
+      const url = URL.createObjectURL(blob);
+      audioBlobUrlRef.current = url;
 
-    const interval = setInterval(() => {
-      stepCount++;
-      const currentPct = Math.min(100, Math.round((stepCount / steps) * 100));
-      setProgress(currentPct);
+      if (audioRef.current) {
+        audioRef.current.src = url;
+        audioRef.current.volume = 1.0;
+      }
+    } catch {}
 
-      const secLeft = Math.max(0, Math.ceil(5 - (stepCount * intervalTime) / 1000));
-      setSecondsRemaining(secLeft);
+    // Attempt automatic playback
+    playGalacticAudio();
 
-      if (stepCount >= steps) {
-        clearInterval(interval);
-        // Start fade out animation
-        setIsFadingOut(true);
-        setTimeout(() => {
-          onFinish();
-        }, 500);
+    // Check after 250ms if audio started playing
+    const checkTimer = setTimeout(() => {
+      if (audioRef.current && (audioRef.current.paused || audioRef.current.muted)) {
+        setIsPlayingAudio(false);
+      }
+    }, 250);
+
+    // Global listener: on first click or touch anywhere, immediately play
+    const handleGlobalInteraction = () => {
+      playGalacticAudio();
+    };
+    window.addEventListener('pointerdown', handleGlobalInteraction);
+    window.addEventListener('touchstart', handleGlobalInteraction);
+
+    // Step sequencing: 1 -> 2 -> 3
+    // STEP 2: When reaching step 2 (1200ms), START PROGRESSIVE FADE-OUT
+    const timerStep2 = setTimeout(() => {
+      setCurrentStep(2);
+      startProgressiveAudioFade(2800);
+    }, 1200);
+
+    const timerStep3 = setTimeout(() => {
+      setCurrentStep(3);
+    }, 2400);
+
+    // Finish intro at 4.0s smoothly (audio is already at volume 0)
+    const timerFinish = setTimeout(() => {
+      setIsFadingOut(true);
+      setTimeout(() => {
+        if (audioRef.current) {
+          audioRef.current.pause();
+        }
+        onFinish();
+      }, 400);
+    }, 4000);
+
+    // Progress bar calculation
+    const intervalTime = 30;
+    const totalDuration = 3900;
+    const totalTicks = totalDuration / intervalTime;
+    let ticks = 0;
+
+    const progressInterval = setInterval(() => {
+      ticks++;
+      const pct = Math.min(100, Math.round((ticks / totalTicks) * 100));
+      setProgress(pct);
+      if (ticks >= totalTicks) {
+        clearInterval(progressInterval);
       }
     }, intervalTime);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearTimeout(checkTimer);
+      clearTimeout(timerStep2);
+      clearTimeout(timerStep3);
+      clearTimeout(timerFinish);
+      clearInterval(progressInterval);
+      if (fadeIntervalRef.current) {
+        clearInterval(fadeIntervalRef.current);
+      }
+      window.removeEventListener('pointerdown', handleGlobalInteraction);
+      window.removeEventListener('touchstart', handleGlobalInteraction);
+
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+      if (audioBlobUrlRef.current) {
+        try {
+          URL.revokeObjectURL(audioBlobUrlRef.current);
+        } catch {}
+      }
+      if (audioCtxRef.current && audioCtxRef.current.state !== 'closed') {
+        try {
+          audioCtxRef.current.close();
+        } catch {}
+      }
+    };
   }, [onFinish]);
 
-  const handleSkip = () => {
+  const handleToggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (audioRef.current) {
+      if (audioRef.current.paused || audioRef.current.muted) {
+        audioRef.current.muted = false;
+        audioRef.current.play();
+        setSoundEnabled(true);
+        setIsPlayingAudio(true);
+      } else {
+        audioRef.current.pause();
+        setSoundEnabled(false);
+        setIsPlayingAudio(false);
+      }
+    } else {
+      setSoundEnabled(!soundEnabled);
+    }
+  };
+
+  const handleSkip = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setIsFadingOut(true);
+    startProgressiveAudioFade(200);
     setTimeout(() => {
       onFinish();
     }, 250);
   };
 
+  const activeStepData = INTRO_STEPS[Math.min(currentStep, 3) - 1];
+
   return (
     <div
-      className={`fixed inset-0 z-[100] flex flex-col items-center justify-between bg-[#040718] text-white overflow-hidden transition-all duration-500 ${
+      onClick={playGalacticAudio}
+      className={`fixed inset-0 z-[100] flex flex-col justify-between bg-[#020512] text-white overflow-hidden transition-all duration-700 select-none cursor-pointer ${
         isFadingOut ? 'opacity-0 scale-105 pointer-events-none' : 'opacity-100 scale-100'
       }`}
     >
-      {/* Dynamic Cyberpunk Background Layers */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Ambient radial glows */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-tr from-cyan-500/25 via-purple-600/25 to-pink-500/20 rounded-full blur-[140px] animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-gradient-to-br from-indigo-600/20 to-cyan-500/20 rounded-full blur-[120px]" />
+      {/* Hidden Native HTML5 Audio Element */}
+      <audio
+        ref={audioRef}
+        playsInline
+        preload="auto"
+        onPlay={() => setIsPlayingAudio(true)}
+        onPause={() => setIsPlayingAudio(false)}
+      />
 
-        {/* Perspective Laser Grid */}
-        <div 
-          className="absolute inset-0 opacity-20"
+      {/* ========================================================================= */}
+      {/* OPEN DYNAMIC IMAGE LAYER: NO BOXES / NO FRAMES (IMÁGENES ABIERTAS)        */}
+      {/* ========================================================================= */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* 1. Deep Cosmic Nebula Ambient Glow */}
+        <div
+          key={`ambient-bg-${activeStepData.step}`}
+          className="absolute inset-0 transition-opacity duration-1000 opacity-80 scale-110 blur-3xl"
           style={{
-            backgroundImage: `
-              linear-gradient(to right, rgba(0, 240, 255, 0.15) 1px, transparent 1px),
-              linear-gradient(to bottom, rgba(192, 132, 252, 0.15) 1px, transparent 1px)
-            `,
-            backgroundSize: '40px 40px'
+            backgroundImage: `radial-gradient(circle at 50% 50%, ${activeStepData.accentGlow} 0%, transparent 70%)`,
           }}
         />
 
-        {/* Animated Scanning Line */}
-        <div className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-[bounce_2.5s_infinite] opacity-60 shadow-[0_0_15px_#00f0ff]" />
-      </div>
-
-      {/* Top Bar with Status and Skip Button */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 pt-5 flex items-center justify-between">
-        {/* Telemetry Indicator */}
-        <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-slate-900/80 border border-cyan-400/40 backdrop-blur-md shadow-sm">
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
-          <span className="text-[11px] font-mono tracking-wider text-cyan-300 uppercase">
-            Holographic Link • Activo
-          </span>
-        </div>
-
-        {/* Countdown & Skip Button */}
-        <div className="flex items-center gap-3">
-          <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-900/70 border border-purple-500/40 text-xs font-mono text-purple-300">
-            <span className="animate-spin text-cyan-400">❖</span>
-            <span>Acceso en {secondsRemaining}s</span>
-          </div>
-
-          <button
-            onClick={handleSkip}
-            className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-950/80 hover:bg-cyan-900 border border-cyan-400/60 hover:border-cyan-300 text-cyan-200 hover:text-white text-xs font-bold tracking-wide transition-all shadow-[0_0_15px_rgba(0,240,255,0.3)] cursor-pointer group"
+        {/* 2. THE OPEN IMAGE ITSELF: Full-bleed / Wide Open with Feathered Vignette (NO BOXES, NO LETTERS) */}
+        <div
+          key={`open-image-${activeStepData.step}`}
+          className="absolute inset-0 flex items-center justify-center transition-all duration-700 animate-in fade-in zoom-in-95"
+        >
+          <div
+            className="relative w-full h-full max-w-7xl max-h-[85vh] mx-auto flex items-center justify-center"
+            style={{
+              WebkitMaskImage:
+                'radial-gradient(ellipse 90% 80% at 50% 50%, black 50%, rgba(0,0,0,0.85) 75%, transparent 100%)',
+              maskImage:
+                'radial-gradient(ellipse 90% 80% at 50% 50%, black 50%, rgba(0,0,0,0.85) 75%, transparent 100%)',
+            }}
           >
-            <span>Saltar Intro</span>
-            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform text-cyan-400" />
-          </button>
-        </div>
-      </div>
-
-      {/* Center Cinematic Content */}
-      <div className="relative z-10 w-full max-w-5xl mx-auto px-4 my-auto flex flex-col items-center text-center">
-        {/* Glowing Infinity Logo and Badge */}
-        <div className="relative mb-5">
-          <div className="absolute -inset-4 bg-gradient-to-r from-cyan-500 via-purple-500 to-fuchsia-500 rounded-3xl blur-xl opacity-60 animate-pulse" />
-          <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl p-1 bg-slate-950 border-2 border-cyan-400/80 shadow-[0_0_30px_rgba(0,240,255,0.5)] flex items-center justify-center overflow-hidden">
             <img
-              src={cifraLogo}
-              alt="CifraFlow"
-              className="w-full h-full object-cover rounded-xl"
+              src={activeStepData.image}
+              alt=""
+              className="w-full h-full object-cover sm:object-contain object-center scale-100 animate-[pulse_4s_infinite]"
+              referrerPolicy="no-referrer"
+            />
+
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: `linear-gradient(135deg, ${activeStepData.accentGlow} 0%, transparent 40%, transparent 60%, ${activeStepData.accentGlow} 100%)`,
+                opacity: 0.25,
+              }}
             />
           </div>
         </div>
 
-        {/* Futuristic Brand Titles */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-950/80 border border-purple-400/40 text-purple-300 text-xs font-mono tracking-widest uppercase mb-3">
-          <Sparkles className="w-3.5 h-3.5 text-cyan-400 animate-spin" />
-          <span>INICIANDO CIFRAFLOW PWA EDTECH 3D</span>
-        </div>
+        {/* 3. Galactic Perspective Grid on floor */}
+        <div
+          className="absolute inset-x-0 bottom-0 h-1/2 opacity-20"
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, rgba(0, 240, 255, 0.2) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(192, 132, 252, 0.2) 1px, transparent 1px)
+            `,
+            backgroundSize: '48px 48px',
+            transform: 'perspective(500px) rotateX(60deg)',
+            transformOrigin: 'bottom center',
+          }}
+        />
 
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-display font-black tracking-tight text-white mb-2">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-200 to-fuchsia-400">
-            CIFRA FLOW
-          </span>
-        </h1>
+        {/* 4. Cosmic Horizon Scanner Line */}
+        <div className="absolute inset-x-0 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-[bounce_2.5s_infinite] opacity-60 shadow-[0_0_20px_#00f0ff]" />
+      </div>
 
-        <p className="text-sm sm:text-base text-cyan-200/90 font-medium max-w-xl mb-6">
-          Educación Financiera Gamificada • Microlearning Espiral • Ciberseguridad Integral
-        </p>
+      {/* ========================================================================= */}
+      {/* TOP CONTROLS (ICONS ONLY, NO LETTERS)                                     */}
+      {/* ========================================================================= */}
+      <div className="relative z-20 w-full max-w-6xl mx-auto px-4 pt-4 sm:pt-6 flex items-center justify-between">
+        {/* Audio Status Toggle (Icon only) */}
+        <button
+          onClick={handleToggleMute}
+          aria-label="Audio"
+          className="p-2.5 rounded-full bg-slate-950/70 hover:bg-slate-900 border border-white/20 backdrop-blur-md transition-all cursor-pointer shadow-lg"
+        >
+          {isPlayingAudio ? (
+            <Volume2 className="w-5 h-5 text-cyan-300 animate-pulse" />
+          ) : (
+            <VolumeX className="w-5 h-5 text-amber-400" />
+          )}
+        </button>
 
-        {/* 3 Holographic Visual Cards corresponding to user images */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 w-full max-w-3xl mb-6">
-          {/* Card 1: Co-Op Session */}
-          <div className="relative rounded-2xl overflow-hidden border border-cyan-400/40 bg-slate-900/80 p-2 shadow-lg backdrop-blur-md group hover:border-cyan-300 transition-all">
-            <div className="relative aspect-[3/4] rounded-xl overflow-hidden mb-2">
-              <img
-                src={cifraIntroCoop}
-                alt="Co-Op Session Luna & Kwame"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent" />
-              <span className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-purple-950/85 border border-purple-400/50 text-[10px] font-bold text-purple-200">
-                Co-Op 3D
-              </span>
-            </div>
-            <div className="text-left px-1">
-              <h4 className="text-xs font-bold text-white truncate">Sesión Colaborativa</h4>
-              <p className="text-[11px] text-cyan-300 font-mono">Metas & Blockchain VR</p>
-            </div>
-          </div>
+        {/* Skip Button (Icon only) */}
+        <button
+          onClick={handleSkip}
+          aria-label="Skip"
+          className="p-2.5 rounded-full bg-slate-950/70 hover:bg-cyan-950 border border-cyan-400/50 hover:border-cyan-300 text-cyan-200 backdrop-blur-md transition-all cursor-pointer group shadow-lg"
+        >
+          <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform text-cyan-400" />
+        </button>
+      </div>
 
-          {/* Card 2: PWA Alumno */}
-          <div className="relative rounded-2xl overflow-hidden border border-purple-400/40 bg-slate-900/80 p-2 shadow-lg backdrop-blur-md group hover:border-purple-300 transition-all scale-105 sm:scale-105">
-            <div className="relative aspect-[3/4] rounded-xl overflow-hidden mb-2">
-              <img
-                src={cifraIntroBoy}
-                alt="PWA Alumno Cadete"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent" />
-              <span className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-cyan-950/85 border border-cyan-400/50 text-[10px] font-bold text-cyan-200">
-                1,450 PTS
-              </span>
-            </div>
-            <div className="text-left px-1">
-              <h4 className="text-xs font-bold text-white truncate">PWA Alumno 3D</h4>
-              <p className="text-[11px] text-purple-300 font-mono">Cyber-Cadetes Bachillerato</p>
-            </div>
-          </div>
-
-          {/* Card 3: Cyber Lab */}
-          <div className="relative rounded-2xl overflow-hidden border border-cyan-400/40 bg-slate-900/80 p-2 shadow-lg backdrop-blur-md group hover:border-cyan-300 transition-all">
-            <div className="relative aspect-[3/4] rounded-xl overflow-hidden mb-2">
-              <img
-                src={cifraIntroGirl}
-                alt="Cyber Lab Gamificado"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent" />
-              <span className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-emerald-950/85 border border-emerald-400/50 text-[10px] font-bold text-emerald-200">
-                Microlearning
-              </span>
-            </div>
-            <div className="text-left px-1">
-              <h4 className="text-xs font-bold text-white truncate">Higiene Criptográfica</h4>
-              <p className="text-[11px] text-cyan-300 font-mono">Blindaje Digital & Finanzas</p>
-            </div>
+      {/* ========================================================================= */}
+      {/* CENTER STAGE: MONUMENTAL GLOWING NUMBER ONLY (NO LETTERS / NO WORDS)      */}
+      {/* ========================================================================= */}
+      <div className="relative z-20 w-full max-w-4xl mx-auto px-4 my-auto flex flex-col items-center justify-center text-center">
+        <div
+          key={`number-${currentStep}`}
+          className="relative flex items-center justify-center animate-in zoom-in-75 duration-300 select-none pointer-events-none"
+        >
+          <div
+            className="text-8xl sm:text-[13rem] md:text-[16rem] font-mono font-black leading-none tracking-tighter"
+            style={{
+              color: activeStepData.accentHex,
+              textShadow: `0 0 60px ${activeStepData.accentHex}, 0 0 120px ${activeStepData.accentGlow}`,
+            }}
+          >
+            {currentStep <= 3 ? currentStep : 3}
           </div>
         </div>
       </div>
 
-      {/* Bottom Progress Bar & Telemetry */}
-      <div className="relative z-10 w-full max-w-xl mx-auto px-4 pb-6">
-        <div className="flex items-center justify-between text-xs font-mono text-cyan-300/80 mb-2">
-          <span className="flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-            <span>
-              {progress < 25 && 'Calibrando Módulos Financieros & Gamificación...'}
-              {progress >= 25 && progress < 50 && 'Sincronizando Sistema Holográfico PWA 3D...'}
-              {progress >= 50 && progress < 80 && 'Activando Protocolos de Ciberseguridad & Microlearning...'}
-              {progress >= 80 && 'Acceso Autorizado • Ingresando a la Portada Cifra Flow'}
-            </span>
-          </span>
-          <span className="font-bold text-white">{progress}%</span>
+      {/* ========================================================================= */}
+      {/* BOTTOM MINIMAL STEP DOTS & PROGRESS BAR (NO LETTERS)                      */}
+      {/* ========================================================================= */}
+      <div className="relative z-20 w-full max-w-md mx-auto px-4 pb-5 sm:pb-8 flex flex-col items-center gap-3">
+        {/* 3 Glowing Indicator Dots (Pure geometric indicators) */}
+        <div className="flex items-center justify-center gap-3">
+          {[1, 2, 3].map((stepNum) => {
+            const isActive = currentStep === stepNum;
+            const isPassed = currentStep > stepNum;
+            return (
+              <div
+                key={`dot-${stepNum}`}
+                className={`rounded-full transition-all duration-300 ${
+                  isActive
+                    ? 'w-8 h-2.5 bg-cyan-400 shadow-[0_0_15px_#00f0ff]'
+                    : isPassed
+                    ? 'w-2.5 h-2.5 bg-emerald-400 shadow-[0_0_10px_#10b981]'
+                    : 'w-2.5 h-2.5 bg-slate-700/80'
+                }`}
+              />
+            );
+          })}
         </div>
 
-        {/* 5-second Progress Track */}
-        <div className="w-full h-2 rounded-full bg-slate-900/90 border border-cyan-400/40 overflow-hidden shadow-[0_0_15px_rgba(0,240,255,0.3)]">
+        {/* Sleek Minimal Progress Line */}
+        <div className="w-full h-1.5 rounded-full bg-slate-950/80 border border-white/10 overflow-hidden shadow-md">
           <div
-            className="h-full bg-gradient-to-r from-cyan-400 via-purple-500 to-fuchsia-400 rounded-full transition-all duration-75 shadow-[0_0_12px_#00f0ff]"
+            className="h-full bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-amber-400 rounded-full transition-all duration-75 shadow-[0_0_12px_#00f0ff]"
             style={{ width: `${progress}%` }}
           />
         </div>

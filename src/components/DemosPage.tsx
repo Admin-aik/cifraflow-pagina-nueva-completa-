@@ -57,7 +57,7 @@ const DEMOS_LIST: DemoItem[] = [
     partner: 'Cifra Flow Financiero',
     category: 'banca',
     categoryLabel: 'Entorno Oficial PWA',
-    tagline: 'Inclusión financiera juvenil, Microlearning Espiral y Ciberseguridad Integral.',
+    tagline: 'Educación Financiera Gamificada, Economía Digital y Ciberseguridad Integral.',
     description: 'Entorno interactivo gamificado en tiempo real disponible para estudiantes, docentes y familias. Explora la simulación interactiva con dinámicas de microlearning (3 a 5 min), retos prácticos de ahorro y laboratorio de ciberdefensa.',
     url: 'https://cifraflow-demo-01-prod.web.app/',
     accentColor: '#00f0ff',

@@ -127,7 +127,7 @@ export const InstitutionalContactSection: React.FC<InstitutionalContactSectionPr
                       <Mail className="w-4 h-4" />
                     </div>
                     <div>
-                      <span className="text-[10px] text-cyan-300 font-bold block uppercase tracking-wider">Correo Electrónico Oficial</span>
+                      <span className="text-[10px] text-cyan-300 font-bold block uppercase tracking-wider">Contáctanos • Correo Oficial</span>
                       <span className="font-extrabold text-white text-xs sm:text-sm group-hover:text-cyan-200 transition-colors">
                         aik.info@aiksoluciones.com
                       </span>
@@ -235,7 +235,7 @@ export const InstitutionalContactSection: React.FC<InstitutionalContactSectionPr
                   ) : (
                     <>
                       <Send className="w-4 h-4 text-cyan-200" />
-                      <span>ENVIAR SOLICITUD A CIFRAFLOW2026@GMAIL.COM</span>
+                      <span>ENVIAR SOLICITUD A AIK.INFO@AIKSOLUCIONES.COM</span>
                     </>
                   )}
                 </button>

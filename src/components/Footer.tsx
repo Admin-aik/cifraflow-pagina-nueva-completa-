@@ -121,7 +121,7 @@ export const Footer: React.FC<FooterProps> = ({ initialPlanName, onOpenDemosPage
                     <Mail className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="text-[10px] text-cyan-300 font-bold block uppercase tracking-wider">Correo Electrónico Oficial</span>
+                    <span className="text-[10px] text-cyan-300 font-bold block uppercase tracking-wider">Contáctanos • Correo Oficial</span>
                     <span className="font-extrabold text-white text-xs sm:text-sm group-hover:text-cyan-200 transition-colors">
                       aik.info@aiksoluciones.com
                     </span>
@@ -225,7 +225,7 @@ export const Footer: React.FC<FooterProps> = ({ initialPlanName, onOpenDemosPage
                   ) : (
                     <>
                       <Send className="w-4 h-4 text-cyan-200" />
-                      <span>ENVIAR SOLICITUD A CIFRAFLOW2026@GMAIL.COM</span>
+                      <span>ENVIAR SOLICITUD A AIK.INFO@AIKSOLUCIONES.COM</span>
                     </>
                   )}
                 </button>
@@ -281,7 +281,7 @@ export const Footer: React.FC<FooterProps> = ({ initialPlanName, onOpenDemosPage
             </div>
             <div>
               <div className="font-bold text-white">CifraFlow financiero:</div>
-              <div className="text-[11px] text-slate-300">marca registrada por AIK SOLUCIONES ESTRATEGICAS, C.A. RIF es J-50807601-0.</div>
+              <div className="text-[11px] text-slate-300">marca registrada en el SAPI por AIK SOLUCIONES ESTRATEGICAS, C.A. RIF es J-50807601-0.</div>
             </div>
           </div>
 

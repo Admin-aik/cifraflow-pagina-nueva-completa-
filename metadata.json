@@ -1,6 +1,6 @@
 {
   "name": "Remix CifraFlow Financiero nueva landing con demo",
-  "description": "Plataforma gamificada de Educación Financiera, Ciberseguridad y Finanzas Personales para jóvenes y Bachillerato.",
+  "description": "Plataforma de Educación Financiera Gamificada, Economía Digital y Ciberseguridad Integral para jóvenes.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

@@ -26,7 +26,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
   onClose,
   title = 'Cifra Flow Financiero',
   url,
-  description = 'Descubre Cifra Flow: Plataforma de Educación Financiera Gamificada y Ciberseguridad para jóvenes y bachillerato.'
+  description = 'Descubre Cifra Flow: Plataforma de Educación Financiera Gamificada, Economía Digital y Ciberseguridad Integral para jóvenes.'
 }) => {
   const [copied, setCopied] = useState(false);
   const [showQr, setShowQr] = useState(false);

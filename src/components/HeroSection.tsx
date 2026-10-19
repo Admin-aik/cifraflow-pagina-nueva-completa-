@@ -19,7 +19,7 @@ import {
   Mail
 } from 'lucide-react';
 import { BRAND_ASSETS } from '../data/mockData';
-import cifraVideoSphereImg from '../assets/images/cifra_video_sphere_hero_1790608667091.jpg';
+import cifraVideoSphereImg from '../assets/images/esfera_cifra_banner_1792233040352.jpg';
 import tresNivelesImg from '../assets/images/tres_niveles_participacion_1786450840913.jpg';
 import { CifraStoryVideoPlayer } from './CifraStoryVideoPlayer';
 
@@ -189,17 +189,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <div className="flex items-center justify-center lg:justify-start">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-400/40 text-cyan-300 text-xs font-bold shadow-[0_0_15px_rgba(0,240,255,0.2)]">
                 <Sparkles className="w-3.5 h-3.5 text-cyan-300 animate-pulse" />
-                <span>EDTECH PWA • BACHILLERATO Y JÓVENES</span>
+                <span>EDTECH PWA • JÓVENES</span>
               </span>
             </div>
 
             {/* Main Headline with Graphic Design Optical Proportion */}
             <h1 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[42px] xl:text-[48px] text-white tracking-tight leading-[1.15]">
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-300 to-fuchsia-300">
-                Educación Financiera Gamificada
+                Educación Financiera Gamificada,
               </span>
               <span className="block mt-1 sm:mt-2 text-white">
-                y Ciberseguridad Integral
+                Economía Digital y Ciberseguridad Integral
               </span>
             </h1>
 
@@ -208,7 +208,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               Diseñada bajo metodología <strong className="text-[#060147] font-black">Microlearning Espiral</strong> (sesiones dinámicas de 3 a 5 min) para empoderar a la nueva generación a proteger su patrimonio, prevenir fraudes y prosperar en el ecosistema financiero moderno y bimonetario.
             </p>
 
-            {/* Primary Action Button: Demos en Vivo */}
+            {/* Primary Action Button: Demos en Vivo & Planes de Patrocinio */}
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
               <button
                 onClick={() => onOpenDemosPage ? onOpenDemosPage() : (window.location.hash = '#demos')}
@@ -220,65 +220,28 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 <ArrowRight className="w-5 h-5 text-cyan-200 group-hover:translate-x-1.5 transition-transform" />
               </button>
 
-              {onOpenDemosPage && (
-                <button
-                  onClick={() => onOpenDemosPage()}
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-4 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-200 hover:text-white border border-purple-400/40 text-sm font-bold transition-all shadow-md cursor-pointer"
-                  title="Ver detalles de la demo"
-                >
-                  <Layers className="w-4 h-4 text-purple-300" />
-                  <span>Ver Ficha Técnica</span>
-                </button>
-              )}
+              <button
+                onClick={onOpenSponsorship}
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 hover:text-white border border-purple-400/50 hover:border-cyan-400 text-sm font-extrabold transition-all shadow-md cursor-pointer group"
+                title="Ver Planes de Patrocinio y Apadrinar Colegio"
+              >
+                <Award className="w-4 h-4 text-amber-400 group-hover:scale-110 transition-transform" />
+                <span>Planes de Patrocinio</span>
+              </button>
             </div>
 
-            {/* Official Drive Links & Infographic Button */}
+            {/* Official Material Bar: Optimized, no banner link, infografía replaced by planes de patrocinio */}
             <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-4 text-xs text-slate-300">
               <span className="font-semibold text-slate-200">Material Oficial:</span>
-              
-              <a 
-                href={BRAND_ASSETS.heroBanner}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-1 text-cyan-300 hover:text-cyan-200 underline underline-offset-4 font-semibold"
-              >
-                <span>Banner de Presentación</span>
-                <ExternalLink className="w-3 h-3" />
-              </a>
-
-              <span>•</span>
 
               <button
                 onClick={() => setInfographicModalOpen(true)}
-                className="inline-flex items-center gap-1 text-purple-300 hover:text-purple-200 underline underline-offset-4 font-semibold cursor-pointer"
+                className="inline-flex items-center gap-1.5 text-purple-300 hover:text-white underline underline-offset-4 font-semibold cursor-pointer"
+                title="Ver lámina de Planes de Patrocinio (3 Niveles)"
               >
-                <Eye className="w-3 h-3" />
-                <span>Infografía: 3 Niveles de Participación</span>
+                <Award className="w-3.5 h-3.5 text-amber-400" />
+                <span>Planes de Patrocinio</span>
               </button>
-
-              <span>•</span>
-
-              <a
-                href="mailto:aik.info@aiksoluciones.com?subject=Contacto%20Institucional%20Cifra%20Flow"
-                className="inline-flex items-center gap-1 text-cyan-300 hover:text-cyan-100 underline underline-offset-4 font-semibold"
-                title="Enviar correo a aik.info@aiksoluciones.com"
-              >
-                <Mail className="w-3 h-3 text-cyan-400" />
-                <span>aik.info@aiksoluciones.com</span>
-              </a>
-
-              {onReplayIntro && (
-                <>
-                  <span>•</span>
-                  <button
-                    onClick={onReplayIntro}
-                    className="inline-flex items-center gap-1 text-pink-300 hover:text-pink-100 underline underline-offset-4 font-semibold cursor-pointer"
-                  >
-                    <Sparkles className="w-3 h-3 text-pink-400" />
-                    <span>Ver Intro 3D (5s)</span>
-                  </button>
-                </>
-              )}
             </div>
 
           </div>
@@ -343,7 +306,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                 </div>
                 <div>
                   <h3 className="font-display font-extrabold text-base text-white leading-tight">
-                    Infografía Oficial: Tres Niveles de Participación
+                    Planes de Patrocinio: Tres Niveles de Participación
                   </h3>
                   <p className="text-[11px] text-slate-300 leading-tight">
                     Semillero, Impulso Institucional y Transformación Integral
@@ -354,8 +317,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               <button
                 onClick={() => setInfographicModalOpen(false)}
                 className="p-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white transition-colors cursor-pointer border border-purple-400/30"
-                title="Cerrar infografía"
-                aria-label="Cerrar infografía"
+                title="Cerrar ventana"
+                aria-label="Cerrar ventana"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -364,7 +327,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <div className="flex-1 overflow-auto py-3 flex items-center justify-center">
               <img 
                 src={tresNivelesImg} 
-                alt="Infografía Oficial Tres Niveles de Participación Cifra Flow"
+                alt="Planes de Patrocinio Oficial Tres Niveles de Participación Cifra Flow"
                 className="max-h-[58vh] w-auto object-contain rounded-xl border border-purple-500/30 shadow-md"
                 referrerPolicy="no-referrer"
               />

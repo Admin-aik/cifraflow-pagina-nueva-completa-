@@ -39,12 +39,14 @@ interface NavbarProps {
   activeView: PageView;
   onNavigate: (view: PageView) => void;
   onOpenShare?: () => void;
+  onReplayIntro?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ 
   activeView, 
   onNavigate, 
-  onOpenShare
+  onOpenShare,
+  onReplayIntro
 }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -106,7 +108,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Right Section: 1. Share button, 2. Dropdown Menu Toggle */}
         <div className="relative flex items-center gap-2 sm:gap-3" ref={dropdownRef}>
-          
+
           {/* SHARE BUTTON (Compartir) */}
           <button
             onClick={onOpenShare}
@@ -344,23 +346,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <ArrowRight className="w-3.5 h-3.5 text-cyan-300 group-hover:translate-x-0.5 transition-transform shrink-0 mt-1" />
               </button>
 
-              {/* 10. MATERIAL OFICIAL EN DRIVE */}
-              <a
-                href={BRAND_ASSETS.heroBanner}
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => setDropdownOpen(false)}
-                className="w-full text-left p-2 rounded-xl transition-all flex items-center gap-3 cursor-pointer hover:bg-slate-800/70 text-slate-200 hover:text-white border border-transparent hover:border-purple-400/30"
-              >
-                <div className="p-1.5 rounded-lg bg-slate-800 text-cyan-300 border border-slate-700 shrink-0">
-                  <ExternalLink className="w-4 h-4" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <span className="text-xs font-bold block truncate">Material Oficial & Recursos (Drive)</span>
-                  <span className="text-[10px] text-slate-400 block truncate">Banner, logos y carpetas oficiales</span>
-                </div>
-                <ExternalLink className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-              </a>
 
               {/* 11. Compartir Plataforma */}
               <div className="pt-2 border-t border-purple-500/20">
